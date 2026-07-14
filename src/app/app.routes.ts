@@ -3,6 +3,7 @@ import { LoginComponent } from './features/auth/pages/login/login.component';
 import { ProffesorDashboard } from './features/proffesor/pages/proffesor-dashboard';
 import { StudentDashboard } from './features/student/pages/student-dashboard/student-dashboard';
 import { AdministratorDashboard } from './features/administrator/pages/administrator-dashboard';
+import { authGuard } from './core/guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -11,19 +12,27 @@ export const routes: Routes = [
   },
   {
     path: 'proffesor',
-    component: ProffesorDashboard
+    component: ProffesorDashboard,
+    canActivate: [authGuard]
   },
   {
     path: 'student',
-    component: StudentDashboard
+    component: StudentDashboard,
+    canActivate: [authGuard]
+    
   },
   {
-  path: 'admin',
-  component: AdministratorDashboard
+    path: 'administrator',
+    component: AdministratorDashboard,
+    canActivate: [authGuard]
   },
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: 'login'
   }
 ];

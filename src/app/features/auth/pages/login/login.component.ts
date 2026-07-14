@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   imports: [FormsModule],
   templateUrl: './login.component.html'
 })
+
 export class LoginComponent {
 
   public email = ''
@@ -30,12 +31,13 @@ export class LoginComponent {
 
         switch(role){
 
-          case 'ADMIN':
-            this.router.navigate(['/admin']);
+          case 'ADMINISTRATOR':
+            this.router.navigate(['/administrator']);
             break;
 
-          case 'PROFESSOR':
-            this.router.navigate(['/teacher']);
+          case 'PROFFESOR':
+            this.router.navigate(['/proffesor']);
+            this.router.navigate(['/student']); //esto es solo para pruebas
             break;
 
           case 'STUDENT':
