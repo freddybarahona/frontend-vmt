@@ -12,14 +12,13 @@ export class AuthService {
 
   private apiUrl = environment.apiUrl;
   private branch = `${this.apiUrl}/auth`;
-
   constructor(
     private http: HttpClient
   ) {}
 
   login(email: string, password: string): Observable<any> {
     return this.http.post(
-      `${this.apiUrl}/login`,
+      `${this.branch}/login`,
       {
         email,
         password
@@ -48,6 +47,12 @@ export class AuthService {
 
   getRole(): string | null {
     return this.getPayload()?.role ?? null;
+  }
+
+  getUserId(): number | null {
+    const id =this.getPayload()?.id ?? 0;
+    
+    return id
   }
 
   logout(): void {
