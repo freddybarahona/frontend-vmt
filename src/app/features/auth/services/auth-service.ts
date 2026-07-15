@@ -3,13 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
+import { environment } from '../../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private apiUrl = 'http://localhost:3000/auth';
+  private apiUrl = environment.apiUrl;
+  private branch = `${this.apiUrl}/auth`;
 
   constructor(
     private http: HttpClient
