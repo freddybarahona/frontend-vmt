@@ -3,6 +3,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { SubjectService } from '../../services/subject.service';
 import { Subject } from '../../interfaces/subject';
 import { AuthService } from '../../../auth/services/auth-service';
+import { JwtPayload } from 'jwt-decode';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -14,16 +15,14 @@ export class StudentDashboardComponent implements OnInit {
 
   private subjectService = inject(SubjectService)
   private authService = inject(AuthService)
+  public studentName = ''
   subjects: Subject[] = [];
   loading = signal(false)
 
   ngOnInit(): void {
 
     let studentId = this.authService.getUserId()
-    if(studentId == null){
-      studentId= 0
-    }
-
+    this.studentName = this.authService.getUserName()
     this.obtenerMaterias(studentId)
     
   }

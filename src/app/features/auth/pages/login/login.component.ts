@@ -18,8 +18,13 @@ export class LoginComponent {
   constructor( private authService: AuthService, private router: Router
   ){}
 
-  login() {
+  public showPassword = false;
 
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  login() {
     this.authService.login(this.email, this.password).subscribe({
       next: response => {
         console.log(response)

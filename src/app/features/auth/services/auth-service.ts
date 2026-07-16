@@ -49,10 +49,15 @@ export class AuthService {
     return this.getPayload()?.role ?? null;
   }
 
-  getUserId(): number | null {
+  getUserId(): number{
     const id =this.getPayload()?.id ?? 0;
     
     return id
+  }
+
+  getUserName(): string{
+    let name =this.getPayload()?.name ?? '******';
+    return name
   }
 
   logout(): void {
