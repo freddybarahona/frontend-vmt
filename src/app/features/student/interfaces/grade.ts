@@ -1,5 +1,5 @@
 export interface Grade {
   id: number
-  name: string
+  nameSubject: string
   score: string
 }
