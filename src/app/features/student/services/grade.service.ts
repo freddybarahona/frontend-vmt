@@ -8,14 +8,14 @@ import { GenericResponse } from '../../../core/interfaces/genericResponse';
 @Injectable({
   providedIn: 'root'
 })
-export class SubjectService {
+export class GradeService {
     private http = inject(HttpClient)
     private apiUrl = environment.apiUrl
-    private branch = `${this.apiUrl}/subjects`
+    private branch = `${this.apiUrl}/grades`
   
     getSubjectsByStudent(id: number): Observable<GenericResponse<Subject[]>> {
         return this.http.get<GenericResponse<Subject[]>>(
-        `${this.branch}/getBy/${id}`
+        `${this.branch}/get/${id}`
         )
     }
 }

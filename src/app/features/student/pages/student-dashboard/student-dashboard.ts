@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { SubjectService } from '../../services/subject.service';
+import { GradeService } from '../../services/grade.service';
 import { Subject } from '../../interfaces/subject';
 import { AuthService } from '../../../auth/services/auth-service';
 import { JwtPayload } from 'jwt-decode';
@@ -13,7 +13,7 @@ import { JwtPayload } from 'jwt-decode';
 })
 export class StudentDashboardComponent implements OnInit {
 
-  private subjectService = inject(SubjectService)
+  private gradeService = inject(GradeService)
   private authService = inject(AuthService)
   public studentName = ''
   subjects: Subject[] = [];
@@ -29,7 +29,7 @@ export class StudentDashboardComponent implements OnInit {
 
   obtenerMaterias(id: number){
     this.loading.set(true)
-    this.subjectService
+    this.gradeService
       .getSubjectsByStudent(id)
       .subscribe(response =>{
           this.loading.set(false)

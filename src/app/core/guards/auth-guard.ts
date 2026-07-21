@@ -43,8 +43,8 @@ export const authGuard: CanActivateFn = (route, state) => { //o no va ni routeni
   return true
 };
 
-
-function getDashboard(role: string | null): string {
+//version actualizada del function anterior
+const getDashboard =(role: string | null): string => {
   switch (role){
     case 'PROFFESOR':
       return '/proffesor'
