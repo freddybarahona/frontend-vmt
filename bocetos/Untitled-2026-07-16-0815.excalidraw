@@ -4811,7 +4811,7 @@
       "id": "iQsENzidaR7YyEVYvLiJ8",
       "type": "rectangle",
       "x": 1555.8235209468726,
-      "y": 1759.7708324505857,
+      "y": 1757.7708324505857,
       "width": 110.85516339795959,
       "height": 35,
       "angle": 0,
@@ -4829,8 +4829,8 @@
         "type": 3
       },
       "seed": 1986233065,
-      "version": 168,
-      "versionNonce": 1859860969,
+      "version": 170,
+      "versionNonce": 1753640041,
       "isDeleted": false,
       "boundElements": [
         {
@@ -4838,7 +4838,7 @@
           "id": "MQwFPpCdPx772Cce7jumC"
         }
       ],
-      "updated": 1784662880061,
+      "updated": 1784663563116,
       "link": null,
       "locked": false
     },
@@ -4846,7 +4846,7 @@
       "id": "MQwFPpCdPx772Cce7jumC",
       "type": "text",
       "x": 1574.4111368255399,
-      "y": 1764.7708324505857,
+      "y": 1762.7708324505857,
       "width": 73.679931640625,
       "height": 25,
       "angle": 0,
@@ -4862,11 +4862,11 @@
       "index": "b19",
       "roundness": null,
       "seed": 178601417,
-      "version": 173,
-      "versionNonce": 431964487,
+      "version": 175,
+      "versionNonce": 447982247,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784662882870,
+      "updated": 1784663563116,
       "link": null,
       "locked": false,
       "text": "guardar",
@@ -5280,7 +5280,7 @@
       "id": "B8x6ZI6BtgSbSpIbUGoqO",
       "type": "rectangle",
       "x": 1681.8321382919412,
-      "y": 1758.0576522877734,
+      "y": 1756.0576522877734,
       "width": 106.74933709357288,
       "height": 35,
       "angle": 0,
@@ -5298,8 +5298,8 @@
         "type": 3
       },
       "seed": 2063394247,
-      "version": 242,
-      "versionNonce": 1562857577,
+      "version": 244,
+      "versionNonce": 1538193225,
       "isDeleted": false,
       "boundElements": [
         {
@@ -5307,7 +5307,7 @@
           "id": "KxR-Xf_NIkXr_KagEqC3T"
         }
       ],
-      "updated": 1784662899294,
+      "updated": 1784663563116,
       "link": null,
       "locked": false
     },
@@ -5315,7 +5315,7 @@
       "id": "KxR-Xf_NIkXr_KagEqC3T",
       "type": "text",
       "x": 1696.606846511579,
-      "y": 1763.0576522877734,
+      "y": 1761.0576522877734,
       "width": 77.19992065429688,
       "height": 25,
       "angle": 0,
@@ -5331,11 +5331,11 @@
       "index": "b1M",
       "roundness": null,
       "seed": 705336551,
-      "version": 256,
-      "versionNonce": 1385388873,
+      "version": 258,
+      "versionNonce": 878034375,
       "isDeleted": false,
       "boundElements": [],
-      "updated": 1784662899294,
+      "updated": 1784663563116,
       "link": null,
       "locked": false,
       "text": "cancelar",
