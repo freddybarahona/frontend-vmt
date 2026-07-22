@@ -29,7 +29,7 @@ export class StudentDashboardComponent implements OnInit {
   obtenerMaterias(id: number){
     this.loading.set(true)
     this.gradeService
-      .getSubjectsByStudent(id)
+      .getGradesByUser(id)
       .subscribe(response =>{
           this.loading.set(false)
           console.log('Response:', response)

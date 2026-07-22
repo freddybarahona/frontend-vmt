@@ -1,5 +1,34 @@
-<div class="min-h-screen flex items-center justify-center">
-  <h1 class="text-4xl font-bold">
-    Dashboard Proffesor
-  </h1>
+<div class="min-h-screen bg-gray-100 p-8">
+
+  <div class="max-w-5xl mx-auto">
+
+    <h1 class="text-4xl font-bold mb-8">
+      Dashboard Profesor {{ proffesorName }}
+    </h1>
+
+    <button class="mb-8 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition">
+      Registrar Materia
+    </button>
+
+    @if(loading()) {
+      <div class="text-lg">
+        Cargando materias...
+      </div>
+    } @else {
+      <div class="grid gap-4">
+        @for(grade of grades; track grade.id) {
+          <div class="rounded-xl bg-white p-5 shadow-md border border-gray-200">
+            <h3 class="text-xl font-semibold">
+              {{ grade.nameSubject }}
+            </h3>
+            <div class="mt-4">
+              <button class="rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700 transition">
+                Ver estudiantes
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
 </div>
