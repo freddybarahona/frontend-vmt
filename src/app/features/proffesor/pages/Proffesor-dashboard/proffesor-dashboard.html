@@ -16,12 +16,15 @@
       </div>
     } @else {
       <div class="grid gap-4">
-        @for(grade of grades; track grade.id) {
+        <h3 class="text-xl font-semibold">
+          materias registradas
+        </h3>
+        @for(grade of grades; track grade.idSubject) {
           <div class="rounded-xl bg-white p-5 shadow-md border border-gray-200">
             <h3 class="text-xl font-semibold">
               {{ grade.nameSubject }}
             </h3>
-            <div class="mt-4">
+            <div (click)="verEstudiantes(grade.idSubject)" class="mt-4">
               <button class="rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700 transition">
                 Ver estudiantes
               </button>

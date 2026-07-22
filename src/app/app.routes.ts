@@ -1,38 +1,58 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/auth/pages/login/login.component';
-import { ProffesorDashboard } from './features/proffesor/pages/proffesor-dashboard';
-import { AdministratorDashboard } from './features/administrator/pages/administrator-dashboard';
 import { authGuard } from './core/guards/auth-guard';
-import { StudentDashboardComponent } from './features/student/pages/student-dashboard/student-dashboard';
-
 export const routes: Routes = [
   {
-    path: 'login',
-    component: LoginComponent
+    path: 'auth',
+    loadChildren: () =>
+      import('./features/auth/auth.routes')
   },
   {
     path: 'proffesor',
-    component: ProffesorDashboard,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    loadChildren: () => //lazy loading mejor opcion
+      import('./features/proffesor/proffesor.routes')
   },
   {
     path: 'student',
-    component: StudentDashboardComponent,
-    canActivate: [authGuard]
-    
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('./features/student/student.routes')
   },
   {
     path: 'administrator',
-    component: AdministratorDashboard,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    loadChildren: () => 
+      import('./features/administrator/administrator.routes')
   },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'auth/login',
     pathMatch: 'full'
   },
   {
     path: '**',
-    redirectTo: 'login'
+    redirectTo: '' //mas practico
   }
-];
+]
+
+/* 
+VERSION POCO ESCALABLE:
+{
+  path: 'administrator',
+  component: AdministratorDashboard,
+  canActivate: [authGuard]
+} 
+VERSION MUY ESCALABLE:
+{
+  path: 'proffesor',
+  canActivate: [authGuard],
+  loadChildren: () => 
+    import('./features/proffesor/proffesor.routes')
+}
+
+
+el children: carga todas las rutas alarrancart la app
+el loadChildren: hace lazy loading haceindo que se carguen los elementos solo cuando se entre al componente
+
+*/

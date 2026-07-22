@@ -1,9 +1,10 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Grade } from '../../student/interfaces/grade';
-import { GradeService } from '../../student/services/grade.service';
-import { AuthService } from '../../auth/services/auth-service';
+import { Grade } from '../../../student/interfaces/grade';
+import { GradeService } from '../../../student/services/grade.service';
+import { AuthService } from '../../../auth/services/auth-service';
 import { CommonModule } from '@angular/common';
-import { CreateGradeRequest } from '../../../shared/interfaces/create-grade-request';
+import { CreateGradeRequest } from '../../../../shared/interfaces/create-grade-request';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-proffesor-dashboard',
@@ -12,6 +13,7 @@ import { CreateGradeRequest } from '../../../shared/interfaces/create-grade-requ
   styleUrl: './proffesor-dashboard.css',
 })
 export class ProffesorDashboard implements OnInit {
+  private router = inject(Router)//es de angular/router no de express ese es para back
   private gradeService= inject(GradeService)
   private authService = inject(AuthService)
   public proffesorName = ''
@@ -50,4 +52,7 @@ export class ProffesorDashboard implements OnInit {
     )
   }
   
+  verEstudiantes(subjectId: number){
+    this.router.navigate(['/proffesor','students',subjectId])
+  }
 }
