@@ -79,7 +79,7 @@
 
             </tr>
           }@else{
-            @for(grade of grades; track grade.id){
+            @for(grade of grades; track grade.idSubject){
               <tr class="hover:bg-slate-50 transition duration-200">
                 <td class="px-6 py-4 text-slate-700">
                   {{ grade.nameSubject }}
@@ -93,14 +93,8 @@
               </tr>
             }
           }
-
-
         }
-
       </tbody>
-
     </table>
-
   </div>
-
 </div>

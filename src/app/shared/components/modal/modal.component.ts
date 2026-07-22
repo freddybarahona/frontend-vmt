@@ -8,9 +8,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './modal.component.css',
 })
 export class ModalComponent {
-  @Input() isOpen = false; //controla si se muestra
-  @Input() title = ''; //variable de titulo si la llama en multiples componentes
-  @Output() close = new EventEmitter<void>();
+  @Input() isOpen = false //un componente padre le envie datos a este componente hijo
+  @Input() title = ''
+  @Output() close = new EventEmitter<void>()//@output para que el hijo envie eventos al padre
+  /* el event emitter es un generico que permite lanzar eventos personalizados */
   onClose() {//notifica al componente padre de que se cerro
     this.close.emit();
   }
