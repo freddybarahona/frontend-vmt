@@ -1,12 +1,10 @@
 import { inject, PLATFORM_ID } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { AuthService } from '../../features/auth/services/auth-service';
 import { jwtDecode} from 'jwt-decode';
 import { JwtPayload } from '../../features/auth/interfaces/jwt-payload.interface';
 
 export const authGuard: CanActivateFn = (route, state) => { //o no va ni routeni state o van las dos recuerda
-
   const router = inject(Router);
   const platformId = inject(PLATFORM_ID); //registro de un identifiador de plataforma(browser) o server esto fue por un error que me salia en consola no bloqueaba nada solo es por estetica
   console.log(platformId)
@@ -27,19 +25,15 @@ export const authGuard: CanActivateFn = (route, state) => { //o no va ni routeni
 
   console.log('token: ',token)
   console.log('role:',role)
-  console.log('dashboard:', getDashboard(role))
-
-  const currentPath = route.routeConfig?.path //obtiene la ruta actual
-  console.log('ruta actual:',currentPath)
+  
   const dashboard = getDashboard(role);
-
-  if (currentPath !== dashboard.replace('/', '')) {
+  console.log('dashboard:', dashboard)
+  const url_comp = state.url.startsWith(dashboard) //esto retorna un boolean que verifica si inicia con la url correcta
+  console.log('url:', url_comp)
+  if(!url_comp)
     return router.createUrlTree([dashboard]);
-  }
-  /* verifica que la currentPath que retorna proffesor, 
-  sea igual al dashboard que viene con una / pero aca 
-  la reemplaza por la ruta real generada en el app.routes  */
-
+  /* esta forma verifica el inicio de la url de manera
+  mas escalable */
   return true
 };
 

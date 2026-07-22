@@ -8,7 +8,7 @@ export default [
     component: ProffesorDashboard
   },
   {
-    path: 'student/:subjectId',
+    path: 'students/:subjectId',
     component: SubjectStudents
   }
 ] as Routes

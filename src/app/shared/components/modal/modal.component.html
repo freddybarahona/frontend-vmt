@@ -1,0 +1,24 @@
+@if(isOpen){
+
+  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+
+    <div class="bg-white rounded-xl shadow-xl w-full max-w-lg">
+
+      <div class="flex items-center justify-between border-b p-4">
+        <h2 class="text-xl font-bold">
+          {{ title }}
+        </h2>
+
+        <button (click)="onClose()" class="text-gray-500 hover:text-black" >
+          ✕
+        </button>
+      </div>
+      <div class="p-4">
+        <ng-content /><!-- esto permite que el modal sea reutilizable porque permite proyectar contenido dentro de el -->
+      </div>
+
+    </div>
+
+  </div>
+
+}

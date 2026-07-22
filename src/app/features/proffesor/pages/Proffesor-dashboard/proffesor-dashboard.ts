@@ -5,10 +5,14 @@ import { AuthService } from '../../../auth/services/auth-service';
 import { CommonModule } from '@angular/common';
 import { CreateGradeRequest } from '../../../../shared/interfaces/create-grade-request';
 import { Router } from '@angular/router';
+import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 
 @Component({
   selector: 'app-proffesor-dashboard',
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    ModalComponent,
+  ],
   templateUrl: './proffesor-dashboard.html',
   styleUrl: './proffesor-dashboard.css',
 })
@@ -19,6 +23,15 @@ export class ProffesorDashboard implements OnInit {
   public proffesorName = ''
   grades: Grade[] = []
   loading = signal(false)
+  isModalOpen = false
+
+  openModal(){
+    this.isModalOpen = true
+  }
+
+  closeModal(){
+    this.isModalOpen = false
+  }
   
   ngOnInit(): void {
     const proffesorId = this.authService.getUserId()
@@ -53,6 +66,7 @@ export class ProffesorDashboard implements OnInit {
   }
   
   verEstudiantes(subjectId: number){
-    this.router.navigate(['/proffesor','students',subjectId])
+    this.router.navigate(['/proffesor','students',subjectId])// la coma es la la / de la ruta ( ' *')
+    console.log('entre')
   }
 }

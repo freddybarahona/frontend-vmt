@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-subject-students',
@@ -6,4 +7,12 @@ import { Component } from '@angular/core';
   templateUrl: './subject-students.html',
   styleUrl: './subject-students.css',
 })
-export class SubjectStudents {}
+export class SubjectStudents implements OnInit {
+  private route = inject(ActivatedRoute)
+  
+  ngOnInit(): void {
+    const subjectId = Number(this.route.snapshot.paramMap.get('subjectId'))
+    console.log(subjectId)
+  }
+
+}

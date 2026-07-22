@@ -6,9 +6,15 @@
       Dashboard Profesor {{ proffesorName }}
     </h1>
 
-    <button class="mb-8 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition">
+    <button (click)="openModal()" class="mb-8 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition">
       Registrar Materia
     </button>
+    
+    <app-modal [isOpen]="isModalOpen" title="Registrar Materia" (close)="closeModal()">
+      <p class="mb-4">
+        Selecciona una materia:
+      </p>
+    </app-modal>
 
     @if(loading()) {
       <div class="text-lg">
