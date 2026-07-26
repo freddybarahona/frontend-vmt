@@ -1,10 +1,11 @@
 import { HttpClient} from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable} from 'rxjs';
-import { environment } from '../../../../environments/environment.development';
-import { GenericResponse } from '../../../core/interfaces/genericResponse';
-import { Grade } from '../interfaces/grade';
-import { CreateGradeRequest } from '../../../shared/interfaces/create-grade-request';
+import { environment } from '../../../environments/environment.development';
+import { GenericResponse } from '../../core/interfaces/genericResponse';
+import { Grade } from '../../features/student/interfaces/grade';
+import { CreateGradeRequest } from '../interfaces/create-grade-request';
+import { GetGradesBySubjectRequest } from '../interfaces/get-grades-by-subject-request';
 
 
 @Injectable({
@@ -20,6 +21,11 @@ export class GradeService {
         `${this.branch}/get/${id}`
         )
     }
+
+    getGradesBySubject(request: GetGradesBySubjectRequest): Observable<GenericResponse<Grade[]>>{
+      return this.http.get<GenericResponse<Grade[]>>(`${this.branch}/get/${request.subjectId}/${request.role}`)
+    }
+
     //solo prof y stu
     CreateGrade(request: CreateGradeRequest): Observable<GenericResponse<Grade>>{
       return this.http.post<GenericResponse<Grade>>(`${this.branch}/create`,request)

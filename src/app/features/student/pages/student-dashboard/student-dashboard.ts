@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { GradeService } from '../../services/grade.service';
+import { GradeService } from '../../../../shared/services/grade.service';
 import { AuthService } from '../../../auth/services/auth-service';
 import { Grade } from '../../interfaces/grade';
 
