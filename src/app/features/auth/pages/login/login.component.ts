@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
 import { Router } from '@angular/router';
+import { LoginRequest } from '../../../../login-request';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,11 @@ export class LoginComponent {
   }
 
   login() {
-    this.authService.login(this.email, this.password).subscribe({
+    const req: LoginRequest={
+      email: this.email,
+      password: this.password
+    }
+    this.authService.login(req).subscribe({
       next: response => {
         console.log(response)
         const token = response.data.token;
