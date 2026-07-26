@@ -4,6 +4,10 @@ import { jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
 import { environment } from '../../../../environments/environment.development';
+import { GenericResponse } from '../../../core/interfaces/genericResponse';
+import { User } from '../../../user';
+import { CreateUserRequest } from '../../../shared/interfaces/create-user-request';
+import { LoginRequest } from '../../../login-request';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +20,12 @@ export class AuthService {
     private http: HttpClient
   ) {}
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post(
-      `${this.branch}/login`,
-      {
-        email,
-        password
-      }
-    );
+  login(req: LoginRequest): Observable<any> {
+    return this.http.post(`${this.branch}/login`,req)
+  }
+
+  createUser(req: CreateUserRequest): Observable<GenericResponse<User>>{
+    return this.http.post<GenericResponse<User>>(`${this.branch}/create`, req)
   }
 
   saveToken(token: string): void {
