@@ -7,6 +7,7 @@ import { Grade } from '../../features/student/interfaces/grade';
 import { CreateGradeRequest } from '../interfaces/create-grade-request';
 import { GetGradesBySubjectRequest } from '../interfaces/get-grades-by-subject-request';
 import { UpdateGradeStudentRequest } from '../interfaces/update-grade-student-request';
+import { GetGradesBySubjectDTO } from '../interfaces/get-grades-by-subjectDTO';
 
 
 @Injectable({
@@ -33,8 +34,8 @@ export class GradeService {
       return this.http.patch<GenericResponse<Grade>>(`${this.branch}/update/${request.subjectId}/${request.studentId}`,request.score)
     }
 
-    getGradesBySubject(request: GetGradesBySubjectRequest): Observable<GenericResponse<Grade[]>>{
-      return this.http.get<GenericResponse<Grade[]>>(`${this.branch}/get/${request.subjectId}/${request.role}`)
+    getGradesBySubject(request: GetGradesBySubjectRequest): Observable<GenericResponse<GetGradesBySubjectDTO[]>>{
+      return this.http.get<GenericResponse<GetGradesBySubjectDTO[]>>(`${this.branch}/get/${request.subjectId}/${request.role}`)
     }
 
     getGradesByUser(id: number): Observable<GenericResponse<Grade[]>> {
