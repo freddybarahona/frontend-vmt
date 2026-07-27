@@ -58,13 +58,13 @@ export class SubjectStudents implements OnInit {
 
 
 
-  editarNota(user: GetGradesBySubjectDTO){
+  editarNota(user: GetGradesBySubjectDTO){// etapa 1 entra, guarda el usuario, guarda la nota actual, abre el modal 
     this.selectedUser = user
     this.newScore = Number(user.score)
     this.toggleModal()
   }
   
-  guardarNota(){
+  guardarNota(){// etapa 2 verifica que se ingrese algo y si no retorna, rellena el payload, actualiza la nota, cierra modal y detecta los cambios 
     if(!this.selectedUser) return
     const payload : UpdateGradeStudentRequest={
       subjectId: Number(this.route.snapshot.paramMap.get('subjectId')),
