@@ -31,7 +31,7 @@ export class GradeService {
     }
 
     updateGradeStudentByProf(request: UpdateGradeStudentRequest): Observable<GenericResponse<Grade>>{
-      return this.http.patch<GenericResponse<Grade>>(`${this.branch}/update/${request.subjectId}/${request.studentId}`,request.score)
+      return this.http.patch<GenericResponse<Grade>>(`${this.branch}/update/${request.subjectId}/${request.studentId}`,{score: request.score}) //esto es importante fijate en detalles
     }
 
     getGradesBySubject(request: GetGradesBySubjectRequest): Observable<GenericResponse<GetGradesBySubjectDTO[]>>{

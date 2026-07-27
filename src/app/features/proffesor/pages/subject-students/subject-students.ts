@@ -1,10 +1,10 @@
-import { Component, inject, OnInit, signal, Signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, signal} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GradeService } from '../../../../shared/services/grade.service';
-import { Grade } from '../../../student/interfaces/grade';
 import { GetGradesBySubjectRequest } from '../../../../shared/interfaces/get-grades-by-subject-request';
 import { GetGradesBySubjectDTO } from '../../../../shared/interfaces/get-grades-by-subjectDTO';
 import { CommonModule, DatePipe } from '@angular/common';
+import { UpdateGradeStudentRequest } from '../../../../shared/interfaces/update-grade-student-request';
 
 @Component({
   selector: 'app-subject-students',
@@ -18,6 +18,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 export class SubjectStudents implements OnInit {
   private route = inject(ActivatedRoute)
   private gradeService= inject(GradeService)
+  private cdr = inject(ChangeDetectorRef)
   usersBySubject: GetGradesBySubjectDTO[] = [] 
   loading= signal(false) 
   ngOnInit(): void {
@@ -37,6 +38,20 @@ export class SubjectStudents implements OnInit {
       this.usersBySubject= response.data
       console.log(response)
       this.loading.set(false)
+    })
+  }
+
+  editarNota(user: GetGradesBySubjectDTO){
+    console.log(user)
+    const payload : UpdateGradeStudentRequest={
+      subjectId: Number(this.route.snapshot.paramMap.get('subjectId')),
+      studentId: user.idUser,
+      score: 0/* el valor ingresara del modal por ahora se quemara */
+    }
+    this.gradeService.updateGradeStudentByProf(payload).subscribe(response => {
+      console.log(response.data)
+      user.score = String(payload.score)
+      this.cdr.detectChanges()
     })
   }
 }
