@@ -11,9 +11,18 @@
     </button>
     
     <app-modal [isOpen]="isModalOpen" title="Registrar Materia" (close)="closeModal()">
+      <p>Cantidad: {{ availableSubjects.length }}</p>
       <p class="mb-4">
         Selecciona una materia:
       </p>
+      @for (subject of availableSubjects; track subject.id) {
+        <div>
+          <span>{{subject.name}}</span>
+          <button (click)="registerGrade(subject.id)" class="bg-blue-600 text-white px-3 py-1 rounded">
+            registrar
+          </button>
+        </div>
+      }
     </app-modal>
 
     @if(loading()) {

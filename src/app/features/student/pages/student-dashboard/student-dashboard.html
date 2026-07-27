@@ -38,6 +38,31 @@
 
   </div>
 
+  <!-- boton para registro de materia -->
+  <button (click)="toggleModal()" class="mb-8 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+    Registrar Materia
+  </button>
+  <app-modal [isOpen]="isModalOpen" title="Materias disponibles" (close)="toggleModal()">
+    @for (subject of availableSubjects; track subject.id) {
+      <div class="flex justify-between items-center py-2">
+      
+        <span>
+          {{ subject.name }}
+        </span>
+      
+        <button
+          (click)="registerGrade(subject.id)"
+          class="bg-blue-600 text-white px-3 py-1 rounded">
+      
+          Registrar
+      
+        </button>
+      
+      </div>
+    }
+  </app-modal>
+  
+
   <!-- Tabla -->
   <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
 
