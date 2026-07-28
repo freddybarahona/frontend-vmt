@@ -8,6 +8,7 @@ import { CreateGradeRequest } from '../interfaces/create-grade-request';
 import { GetGradesBySubjectRequest } from '../interfaces/get-grades-by-subject-request';
 import { UpdateGradeStudentRequest } from '../interfaces/update-grade-student-request';
 import { GetGradesBySubjectDTO } from '../interfaces/get-grades-by-subjectDTO';
+import { LogicDeleteAdminGradeRequest } from '../interfaces/logic-delete-admin-grade-request';
 
 
 @Injectable({
@@ -40,6 +41,10 @@ export class GradeService {
 
     getGradesByUser(id: number): Observable<GenericResponse<Grade[]>> {
         return this.http.get<GenericResponse<Grade[]>>(`${this.branch}/get/${id}`)
+    }
+
+    logicDeleteAdminGrade(data: LogicDeleteAdminGradeRequest): Observable<GenericResponse<Grade[]>>{
+      return this.http.put<GenericResponse<Grade[]>>(`${this.branch}/deleteAdmin/${data.idSubject}/${data.idUser}`, null)
     }
 
 }

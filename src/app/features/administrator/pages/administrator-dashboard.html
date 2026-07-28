@@ -7,6 +7,9 @@
     <p class="text-gray-500 mt-2">
       Gestión de materias y profesores asignados
     </p>
+    <button class="mb-8 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition">
+      Crear nueva materia
+    </button>
   </div>
 
   <!-- Tabla -->
@@ -30,6 +33,9 @@
             <th class="px-6 py-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
               Profesor Encargado
             </th>
+            <th class="px-6 py-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
+              Acciones
+            </th>
           </tr>
         </thead>
         
@@ -52,11 +58,33 @@
               <td class="px-6 py-4 text-gray-700">
                 {{subject.proffesorName}}
               </td>
+              <td class="px-6 py-4 text-gray-700">
+                @if(subject.proffesorName != 'sin asignar'){
+                  <button (click)="openLiberarModal(subject)" class="mb-8 rounded-lg bg-gray-100 px-4 py-2 text-gray-800 hover:bg-gray-500 transition">
+                    Liberar
+                  </button>
+                }
+              </td>
             </tr>
             }
           }
         </tbody>
       </table>
+      <app-modal [isOpen]="isModalOpen" title="Liberacion de materia" (close)="toggleModal()">
+        <div class="flex justify-between items-center py-2">
+        
+          <span>
+            Esta seguro de quitarle la asignacion de {{selectedSubject?.proffesorName}} a {{selectedSubject?.subjectName}}?
+          </span>
+        
+          <button (click)="borrarGrade()" class="bg-blue-600 text-white px-3 py-1 rounded">
+            Liberar
+          </button>
+          <button (click)="toggleModal()" class="bg-blue-600 text-white px-3 py-1 rounded">
+            cancelar
+          </button>
+        </div>
+      </app-modal>
     </div>
   </div>
 </div>
