@@ -14,7 +14,7 @@ export class UserService {
     private branch = `${this.apiUrl}/users`
 
     getAll(): Observable<GenericResponse<User[]>>{
-        return this.http.get<GenericResponse<User[]>>(`${this.branch}/getAll`,)
+        return this.http.get<GenericResponse<User[]>>(`${this.branch}/get`,)
     }
 
     searchUser(value: string): Observable<GenericResponse<User[]>>{

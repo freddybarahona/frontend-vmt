@@ -1,5 +1,62 @@
-<div class="min-h-screen flex items-center justify-center">
-  <h1 class="text-4xl font-bold">
-    Dashboard Administrador
-  </h1>
+<div class="min-h-screen bg-gray-100 p-6">
+  <!-- Encabezado -->
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-800">
+      Dashboard Administrador de {{ adminName }}
+    </h1>
+    <p class="text-gray-500 mt-2">
+      Gestión de materias y profesores asignados
+    </p>
+  </div>
+
+  <!-- Tabla -->
+  <div class="bg-white rounded-xl shadow-md overflow-hidden">
+    <div class="p-4 border-b border-gray-200">
+      <h2 class="text-lg font-semibold text-gray-700">
+        Materias Registradas
+      </h2>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-left">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
+              ID
+            </th>
+            <th class="px-6 py-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
+              Materia
+            </th>
+            <th class="px-6 py-3 text-sm font-semibold text-gray-600 uppercase tracking-wide">
+              Profesor Encargado
+            </th>
+          </tr>
+        </thead>
+        
+        <tbody class="divide-y divide-gray-200">
+          
+          @if(loading()){
+            <p class="px-6 py-4 text-gray-700">
+              cargando datos...
+            </p>
+          }
+          @if(!loading()){
+            @for(subject of subjectsAvailable; track subject.id){
+              <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4 text-gray-700">
+                {{subject.id}}
+              </td>
+              <td class="px-6 py-4 font-medium text-gray-800">
+                {{subject.subjectName}}
+              </td>
+              <td class="px-6 py-4 text-gray-700">
+                {{subject.proffesorName}}
+              </td>
+            </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

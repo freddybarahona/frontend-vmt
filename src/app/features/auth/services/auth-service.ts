@@ -8,6 +8,8 @@ import { GenericResponse } from '../../../core/interfaces/genericResponse';
 import { User } from '../../../user';
 import { CreateUserRequest } from '../../../shared/interfaces/create-user-request';
 import { LoginRequest } from '../../../login-request';
+import { isPlatformBrowser } from '@angular/common';
+import { inject, PLATFORM_ID } from '@angular/core'
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,7 @@ export class AuthService {
 
   private apiUrl = environment.apiUrl;
   private branch = `${this.apiUrl}/auth`;
+  private platformId= inject(PLATFORM_ID);
   constructor(
     private http: HttpClient
   ) {}
