@@ -18,6 +18,7 @@ export class CreateUserComponent {
   public password= ''
   public repeatPassword= ''
   public showRepeatPassword = false
+  public identificacion = ''
   public selectedRole: 'STUDENT' | 'PROFFESOR' | null = null;
 
   togglePassword(data: number): void {
@@ -27,6 +28,12 @@ export class CreateUserComponent {
     if(data == 2){
       this.showRepeatPassword = !this.showRepeatPassword
     }    
+  }
+
+  equalPasswords(){
+    if(this.password != this.repeatPassword){
+      console.log("las contrasenas no coinciden")
+    }
   }
 
   verificarCorreo(){
