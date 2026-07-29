@@ -17,7 +17,7 @@ export class SubjectService {
     }
 
     createSubject(name: string): Observable<GenericResponse<Subject>>{
-        return this.http.post<GenericResponse<Subject>>(`${this.branch}/create`,name)
+        return this.http.post<GenericResponse<Subject>>(`${this.branch}/create`,{name: name})
     }
 
     updateSubject(req: UpdateSubjectRequest): Observable<GenericResponse<Subject>>{

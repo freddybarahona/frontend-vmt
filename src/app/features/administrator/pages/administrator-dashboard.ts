@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
 import { SubjectService } from '../../../shared/services/subject.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
 import { AuthService } from '../../auth/services/auth-service';
 import { GradeService } from '../../../shared/services/grade.service';
@@ -8,12 +8,19 @@ import { forkJoin } from 'rxjs';
 import { UserService } from '../../../shared/services/user.service';
 import { SubjectProffesor } from '../../../shared/interfaces/subject-proffesor';
 import { LogicDeleteAdminGradeRequest } from '../../../shared/interfaces/logic-delete-admin-grade-request';
-
+import { User } from '../../../user';
+import { response } from 'express';
+import { GetGradesBySubjectRequest } from '../../../shared/interfaces/get-grades-by-subject-request';
+import { GetGradesBySubjectDTO } from '../../../shared/interfaces/get-grades-by-subjectDTO';
+import { error } from 'console';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-dashboard',
   imports: [
     CommonModule,
+    DatePipe,
     ModalComponent,
+    FormsModule
   ],
   templateUrl: './administrator-dashboard.html',
   styleUrl: './administrator-dashboard.css',
@@ -23,23 +30,77 @@ export class AdministratorDashboard implements OnInit {
   private authService = inject(AuthService)
   private GradeService = inject(GradeService)
   private UserService = inject(UserService)
-  private cdr = inject(ChangeDetectorRef) 
   isModalOpen=false
   public adminName = ''
   subjectsAvailable: SubjectProffesor[] =[]
   selectedSubject: LogicDeleteAdminGradeRequest | null= null;// para el modal de liberar
   loading = signal(false)
-  
+  loadingstudents= signal(false)
+  expandedSubjectId: number | null = null
+  studentsBySubject: Record<number, GetGradesBySubjectDTO[]> ={}
+  modalTitle = '';
+  modalType: 'create' | 'delete P' | null = null;
+  newSubjectName: string= ''
+
   ngOnInit(): void {
     this.adminName = this.authService.getUserName()
     this.obtenerMaterias()
   }
 
+  toggleSubject(subjectId: number){
+    
+    if(this.expandedSubjectId == subjectId){
+      this.expandedSubjectId = null
+      return
+    }
+    this.expandedSubjectId = subjectId
+    this.obtenerStudentsBySubject(this.expandedSubjectId)
+    return 
+  }
+
+  obtenerStudentsBySubject(subjectId: number){
+    this.loadingstudents.set(true)
+    const payload: GetGradesBySubjectRequest={
+      subjectId: subjectId,
+      role: 3
+    }
+    this.GradeService.getGradesBySubject(payload).subscribe(response => {
+      this.studentsBySubject[subjectId]= response.data
+      console.log(this.studentsBySubject)
+      this.loadingstudents.set(false)
+    },error=>{
+      this.loadingstudents.set(false)
+    }
+  )}
+
+
   toggleModal(){
     this.isModalOpen = !this.isModalOpen
   }
 
+  openCreateModal(){
+    this.modalType='create'
+    this.modalTitle='Ingrese el nombre de la nueva materia'
+    this.toggleModal()
+  }
+  
+  crearMateria(name: string){
+    this.loading.set(true)
+    this.subjectService.createSubject(name).subscribe(response => {
+      this.obtenerMaterias()
+      this.loading.set(false)
+      this.toggleModal()
+      this.newSubjectName=''
+    },error=> {
+      this.loading.set(false)
+      this.toggleModal()
+      this.newSubjectName=''
+    }
+    )    
+  }
   openLiberarModal(subject: SubjectProffesor){
+    this.modalType= 'delete P'
+    this.modalTitle= 'Liberacion de materia'
     const pase: LogicDeleteAdminGradeRequest={
       idUser: subject.idUser,
       idSubject: subject.id,
@@ -94,4 +155,5 @@ export class AdministratorDashboard implements OnInit {
 
     })
   }
+
 }

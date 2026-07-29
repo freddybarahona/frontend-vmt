@@ -7,7 +7,7 @@
     <p class="text-gray-500 mt-2">
       Gestión de materias y profesores asignados
     </p>
-    <button class="mb-8 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition">
+    <button (click)="openCreateModal()" class="mb-8 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition">
       Crear nueva materia
     </button>
   </div>
@@ -48,7 +48,7 @@
           }
           @if(!loading()){
             @for(subject of subjectsAvailable; track subject.id){
-              <tr class="hover:bg-gray-50 transition-colors">
+              <tr (click)="toggleSubject(subject.id)" class="hover:bg-gray-50 transition-colors">
               <td class="px-6 py-4 text-gray-700">
                 {{subject.id}}
               </td>
@@ -65,25 +65,148 @@
                   </button>
                 }
               </td>
-            </tr>
+              </tr>
+              @if (loadingstudents()) {
+                <tr class="bg-gray-50">
+                  <td colspan="4" class="px-6 py-4">
+                    <div class="rounded-lg border border-gray-200 bg-white">
+                      <div class="flex items-center gap-3 px-4 py-3 text-gray-500">
+
+                        <svg
+                          class="h-5 w-5 animate-spin"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24">
+                          <circle
+                            class="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            stroke-width="4">
+                          </circle>
+                          <path
+                            class="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8v8z">
+                          </path>
+                        </svg>
+
+                        <span>Cargando estudiantes...</span>
+
+                      </div>
+                    </div>
+
+                  </td>
+                </tr>
+              }@else {
+                @if(expandedSubjectId == subject.id){
+                  <tr class="bg-gray-50">
+                    <td colspan="4" class="px-6 py-4">
+  
+                      <div class="rounded-lg border border-gray-200 bg-white">
+  
+                        <div class="px-4 py-3 border-b border-gray-200">
+                          <h3 class="font-semibold text-gray-700">
+                            Estudiantes registrados
+                          </h3>
+                        </div>
+  
+                        @if(studentsBySubject[subject.id] == null){
+                          <div class="px-4 py-3 text-gray-500">
+                            No hay estudiantes registrados.
+                          </div>
+                        }
+  
+                        @if(studentsBySubject[subject.id]?.length > 0){
+                          <table class="w-full text-left">
+                            <thead class="bg-gray-100">
+                              <tr>
+                                <th class="px-4 py-2 text-sm font-semibold text-gray-600 uppercase">
+                                  ID
+                                </th>
+                                <th class="px-4 py-2 text-sm font-semibold text-gray-600 uppercase">
+                                  Nombre
+                                </th>
+                                <th class="px-4 py-2 text-sm font-semibold text-gray-600 uppercase">
+                                  Fecha de inscripción
+                                </th>
+                              </tr>
+                            </thead>
+  
+                            <tbody>
+                              @for(student of studentsBySubject[subject.id]; track student.idUser){
+                                <tr class="border-t border-gray-100 hover:bg-gray-50">
+                                  <td class="px-4 py-2 text-gray-700">
+                                    {{ student.idUser }}
+                                  </td>
+  
+                                  <td class="px-4 py-2 text-gray-800 font-medium">
+                                    {{ student.nameUser }}
+                                  </td>
+  
+                                  <td class="px-4 py-2 text-gray-700">
+                                    {{ student.createdAt_Grade | date:'dd/MM/yyyy' }}
+                                  </td>
+                                </tr>
+                              }
+                            </tbody>
+                          </table>
+                        }
+  
+                      </div>
+  
+                    </td>
+                  </tr>
+  
+                }
+              }
             }
           }
         </tbody>
       </table>
-      <app-modal [isOpen]="isModalOpen" title="Liberacion de materia" (close)="toggleModal()">
-        <div class="flex justify-between items-center py-2">
-        
-          <span>
-            Esta seguro de quitarle la asignacion de {{selectedSubject?.proffesorName}} a {{selectedSubject?.subjectName}}?
-          </span>
-        
-          <button (click)="borrarGrade()" class="bg-blue-600 text-white px-3 py-1 rounded">
-            Liberar
-          </button>
-          <button (click)="toggleModal()" class="bg-blue-600 text-white px-3 py-1 rounded">
-            cancelar
-          </button>
-        </div>
+      <app-modal [isOpen]="isModalOpen" title={{modalTitle}} (close)="toggleModal()">
+        @if (modalType == 'create') {
+          <div class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">
+                Nombre de la materia
+              </label>
+              <input type="text" [(ngModel)]="newSubjectName" placeholder="Ej: Programación Web" class="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2">
+
+              <button
+                (click)="toggleModal()"
+                class="rounded-lg bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300">
+                Cancelar
+              </button>
+
+              <button
+                (click)="crearMateria(newSubjectName)"
+                class="rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700">
+                Crear
+              </button>
+
+            </div>
+
+          </div>
+        }@else if (modalType == 'delete P') {
+          <div class="flex justify-between items-center py-2">
+          
+            <span>
+              Esta seguro de quitarle la asignacion de {{selectedSubject?.proffesorName}} a {{selectedSubject?.subjectName}}?
+            </span>
+          
+            <button (click)="borrarGrade()" class="bg-blue-600 text-white px-3 py-1 rounded">
+              Liberar
+            </button>
+            <button (click)="toggleModal()" class="bg-blue-600 text-white px-3 py-1 rounded">
+              cancelar
+            </button>
+          </div>
+        }
       </app-modal>
     </div>
   </div>
