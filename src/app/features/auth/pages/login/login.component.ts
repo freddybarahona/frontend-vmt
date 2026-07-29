@@ -33,25 +33,25 @@ export class LoginComponent {
     this.authService.login(req).subscribe({
       next: response => {
         console.log(response)
-        const token = response.data.token;
-        this.authService.saveToken(token);
-        console.log(this.authService.getPayload());
-        console.log(this.authService.getRole());
-        const role = this.authService.getRole();
+        const token = response.data.token
+        this.authService.saveToken(token)
+        console.log(this.authService.getPayload())
+        console.log(this.authService.getRole())
+        const role = this.authService.getRole()
 
         switch(role){
 
           case 'ADMINISTRATOR':
-            this.router.navigate(['/administrator']);
+            this.router.navigate(['/administrator'])
             break;
 
           case 'PROFFESOR':
-            this.router.navigate(['/proffesor']);
-            this.router.navigate(['/student']); //esto es solo para pruebas
+            this.router.navigate(['/proffesor'])
+            this.router.navigate(['/student']) //esto es solo para pruebas
             break;
 
           case 'STUDENT':
-            this.router.navigate(['/student']);
+            this.router.navigate(['/student'])
             break;
         }
       },
@@ -59,6 +59,13 @@ export class LoginComponent {
         console.error(err)
       }
     });
+  }
 
+  crearUsuario(){
+    this.router.navigate(['auth/createUser'])
+  }
+
+  reestablecerContrasena(){
+    console.log('entre')
   }
 }
