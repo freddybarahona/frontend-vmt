@@ -21,7 +21,7 @@ export class VerifyCodeComponent {
 
   verificarCodigo(){
     console.log(this.codigo)
-    this.authService.verifyCode(String(this.codigo)).subscribe(
+    /* this.authService.verifyCode(String(this.codigo)).subscribe(
       {
         next: (response) =>{
           //se escribe un mensaje de felicitacion y se regresa al login
@@ -29,7 +29,7 @@ export class VerifyCodeComponent {
         error: (error) =>{
           //se escribe que el mensaje no es correcto y se mantiene en la misma pagina
         }
-      })
+      }) */
   }
 }
 
