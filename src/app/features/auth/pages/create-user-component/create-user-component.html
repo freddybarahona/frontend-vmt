@@ -18,7 +18,7 @@
 
         </div>
 
-        <form (ngSubmit)="verificarCorreo()">
+        <form (ngSubmit)="verificarCampos()">
           <!-- Nombre -->
           <div class="mb-6">
             <label class="block mb-2 text-sm font-semibold text-slate-700">
@@ -30,8 +30,22 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                   </svg>
                 </span>
-              <input type="email" [(ngModel)]="nombre" name="name" placeholder="Juan Perez" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
+              <input type="text" [(ngModel)]="nombre" name="name" placeholder="Juan Perez" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
             </div>
+            @if (actualError.includes('el campo nombre es necesario')) {
+              <div class="justify-center">
+                <label class="block mb-2 text-red-700 text-sm font-semibold">
+                  el campo nombre es necesario
+                </label>
+              </div>
+            }
+            @if (actualError.includes('este campo solo acepta nombres en texto')) {
+              <div class="justify-center">
+                <label class="block mb-2 text-red-700 text-sm font-semibold">
+                  el campo nombre solo acepta texto
+                </label>
+              </div>
+            }
           </div>
 
           <!-- Email -->
@@ -47,7 +61,21 @@
                 </span>
               <input type="email" [(ngModel)]="email" name="email" placeholder="ejemplo@gmail.com" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
             </div>
-
+            <!-- ================================================================================ -->
+            @if (actualError.includes('Este correo es invalido')) {
+              <div class="justify-center">
+                <label class="block mb-2 text-red-700 text-sm font-semibold">
+                  Este correo es invalido 
+                </label>
+              </div>
+            } 
+            @if (actualError.includes('Este email ya existe')) {
+              <div class="justify-center">
+                <label class="block mb-2 text-red-700 text-sm font-semibold">
+                  Este correo ya existe
+                </label>
+              </div>
+            }
           </div>
 
           <!-- Email -->
@@ -61,9 +89,15 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                   </svg>
                 </span>
-              <input type="number" [(ngModel)]="identificacion" name="identificacion" placeholder="0929229233" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
+              <input type="text" [(ngModel)]="identificacion" name="identificacion" placeholder="0929229233" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
             </div>
-
+            @if (actualError.includes('este campo solo acepta 10 numeros')) {
+              <div class="justify-center">
+                <label class="block mb-2 text-red-700 text-sm font-semibold">
+                  este campo solo acepta 10 numeros
+                </label>
+              </div>
+            }
           </div>
 
           <!-- Password -->
@@ -117,7 +151,6 @@
 
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-1.5 0h12a1.5 1.5 0 011.5 1.5v7.5a1.5 1.5 0 01-1.5 1.5h-12A1.5 1.5 0 014.5 19.5v-7.5A1.5 1.5 0 016 10.5z"/>
-
               </svg>
 
             </span>
@@ -141,6 +174,20 @@
                 }
               </button>
             </div>
+            @if (actualError.includes('las contrasenas no coinciden')) {
+              <div class="justify-center">
+                <label class="block mb-2 text-red-700 text-sm font-semibold">
+                  Las contrasenas no coinciden
+                </label>
+              </div>
+            }
+            @if (actualError.includes('el campo contrasena es necesario')) {
+              <div class="justify-center">
+                <label class="block mb-2 text-red-700 text-sm font-semibold">
+                  los campos contrasena es necesario
+                </label>
+              </div>
+            }
           </div>
           <!-- eleccion del tipo de usuario -->
           <div class="mb-6">
@@ -178,6 +225,13 @@
                 </span>
               </button>
             </div>
+            @if (actualError.includes('no selecciono tipo')) {
+              <div class="justify-center">
+                <label class="block mb-2 text-red-700 text-sm font-semibold">
+                  debe seleccionar un tipo de usuario
+                </label>
+              </div>
+            }
           </div>
           <!-- Botón -->
           <button type="submit" class="w-full mt-8 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition duration-300 shadow-lg">

@@ -10,6 +10,7 @@ import { CreateUserRequest } from '../../../shared/interfaces/create-user-reques
 import { LoginRequest } from '../../../login-request';
 import { isPlatformBrowser } from '@angular/common';
 import { inject, PLATFORM_ID } from '@angular/core'
+import { CorreoCodigoVerificacionRequest } from '../../../shared/interfaces/correo-codigo-verificacion-request';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,14 @@ export class AuthService {
 
   createUser(req: CreateUserRequest): Observable<GenericResponse<User>>{
     return this.http.post<GenericResponse<User>>(`${this.branch}/create`, req)
+  }
+
+  correoCodigoVerificacion(req: CorreoCodigoVerificacionRequest): Observable<GenericResponse<void>>{
+    return this.http.post<GenericResponse<void>>(`${this.branch}/request-verification`, req)
+  }
+
+  verifyCode(code: string):Observable<GenericResponse<void>>{
+    return this.http.post<GenericResponse<void>>(`${this.branch}/verify-code`, {code: code})
   }
 
   saveToken(token: string): void {
