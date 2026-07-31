@@ -18,7 +18,7 @@
 
         </div>
 
-        <form (ngSubmit)="verificarCampos()">
+        <form autocomplete="off" (ngSubmit)="verificarCampos()">
           <!-- Nombre -->
           <div class="mb-6">
             <label class="block mb-2 text-sm font-semibold text-slate-700">
@@ -30,16 +30,16 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                   </svg>
                 </span>
-              <input type="text" [(ngModel)]="nombre" name="name" placeholder="Juan Perez" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
+              <input autocomplete="off" type="text" [(ngModel)]="nombre" name="name" placeholder="Juan Perez" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
             </div>
-            @if (actualError.includes('el campo nombre es necesario')) {
+            @if (actualError.includes('el campo nombre es necesario') && !loading()) {
               <div class="justify-center">
                 <label class="block mb-2 text-red-700 text-sm font-semibold">
                   el campo nombre es necesario
                 </label>
               </div>
             }
-            @if (actualError.includes('este campo solo acepta nombres en texto')) {
+            @if (actualError.includes('este campo solo acepta nombres en texto') && !loading()) {
               <div class="justify-center">
                 <label class="block mb-2 text-red-700 text-sm font-semibold">
                   el campo nombre solo acepta texto
@@ -59,17 +59,17 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                   </svg>
                 </span>
-              <input type="email" [(ngModel)]="email" name="email" placeholder="ejemplo@gmail.com" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
+              <input autocomplete="new-password" type="email" [(ngModel)]="email" name="email" placeholder="ejemplo@gmail.com" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
             </div>
             <!-- ================================================================================ -->
-            @if (actualError.includes('Este correo es invalido')) {
+            @if (actualError.includes('Este correo es invalido') && !loading()) {
               <div class="justify-center">
                 <label class="block mb-2 text-red-700 text-sm font-semibold">
                   Este correo es invalido 
                 </label>
               </div>
             } 
-            @if (actualError.includes('Este email ya existe')) {
+            @if (actualError.includes('Este email ya existe') && !loading()) {
               <div class="justify-center">
                 <label class="block mb-2 text-red-700 text-sm font-semibold">
                   Este correo ya existe
@@ -89,9 +89,9 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                   </svg>
                 </span>
-              <input type="text" [(ngModel)]="identificacion" name="identificacion" placeholder="0929229233" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
+              <input autocomplete="off" type="text" [(ngModel)]="identificacion" name="identificacion" placeholder="0929229233" class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
             </div>
-            @if (actualError.includes('este campo solo acepta 10 numeros')) {
+            @if (actualError.includes('este campo solo acepta 10 numeros') && !loading()) {
               <div class="justify-center">
                 <label class="block mb-2 text-red-700 text-sm font-semibold">
                   este campo solo acepta 10 numeros
@@ -118,7 +118,7 @@
 
             </span>
 
-              <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" name="password" placeholder="Ingrese su contraseña" class="w-full pl-10 pr-12 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
+              <input autocomplete="new-password" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" name="password" placeholder="Ingrese su contraseña" class="w-full pl-10 pr-12 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
               <button type="button" (click)="togglePassword(1)" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition">
 
                 @if (!showPassword) {
@@ -155,7 +155,7 @@
 
             </span>
 
-              <input [type]="showRepeatPassword ? 'text' : 'password'" [(ngModel)]="repeatPassword" name="repeatPassword" placeholder="Ingrese su contraseña" class="w-full pl-10 pr-12 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
+              <input autocomplete="off" [type]="showRepeatPassword ? 'text' : 'password'" [(ngModel)]="repeatPassword" name="repeatPassword" placeholder="Ingrese su contraseña" class="w-full pl-10 pr-12 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
               <button type="button" (click)="togglePassword(2)" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition">
 
                 @if (!showRepeatPassword) {
@@ -174,17 +174,17 @@
                 }
               </button>
             </div>
-            @if (actualError.includes('las contrasenas no coinciden')) {
+            @if (actualError.includes('las contrasenas no coinciden') && !loading()) {
               <div class="justify-center">
                 <label class="block mb-2 text-red-700 text-sm font-semibold">
                   Las contrasenas no coinciden
                 </label>
               </div>
             }
-            @if (actualError.includes('el campo contrasena es necesario')) {
+            @if (actualError.includes('el campo contrasena es necesario') && !loading()) {
               <div class="justify-center">
                 <label class="block mb-2 text-red-700 text-sm font-semibold">
-                  los campos contrasena es necesario
+                  los campos contrasena son necesarios
                 </label>
               </div>
             }
@@ -225,7 +225,7 @@
                 </span>
               </button>
             </div>
-            @if (actualError.includes('no selecciono tipo')) {
+            @if (actualError.includes('no selecciono tipo') && !loading()) {
               <div class="justify-center">
                 <label class="block mb-2 text-red-700 text-sm font-semibold">
                   debe seleccionar un tipo de usuario
