@@ -115,9 +115,10 @@ export class CreateUserComponent {
     this.loading.set(true)
     this.authService.correoCodigoVerificacion(payload).subscribe(
       {next: (response) => {
-          console.log('pasamos a mandar el mensaje de verificacion de correo y a su pagina respectiva')
-          console.log(payload)
-          console.log(response.message)
+        /* console.log('pasamos a mandar el mensaje de verificacion de correo y a su pagina respectiva')
+        console.log(payload)
+        console.log(response.message) */
+          this.authService.setFlagVerifyCode(true)
           this.loading.set(false)
           if(this.actualError.length == 0){
             this.router.navigate(['auth/verifyCode'])

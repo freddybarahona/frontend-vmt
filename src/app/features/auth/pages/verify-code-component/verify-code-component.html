@@ -1,12 +1,96 @@
+<div class="min-h-screen bg-slate-100 flex items-center justify-center p-6">
+  
+  <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl p-8">
+    @if (verificatedPhase == false ) {
+      <!-- Título -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-slate-800">
+          Verificar correo
+        </h1>
+  
+        <p class="text-slate-500 mt-2">
+          Ingresa el código enviado a tu correo electrónico
+        </p>
+      </div>
+  
+      <form (ngSubmit)="verificarCodigo()">
+  
+        <!-- Código -->
+        <div class="mb-6">
+          <label class="block mb-2 text-sm font-semibold text-slate-700">
+            Código de verificación
+          </label>
+  
+          <div class="relative">
+  
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+  
+              <svg xmlns="http://www.w3.org/2000/svg"
+                   fill="none"
+                   viewBox="0 0 24 24"
+                   stroke-width="1.5"
+                   stroke="currentColor"
+                   class="w-5 h-5">
+                <path stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-1.5 0h12a1.5 1.5 0 011.5 1.5v7.5a1.5 1.5 0 01-1.5 1.5h-12A1.5 1.5 0 014.5 19.5v-7.5A1.5 1.5 0 016 10.5z"/>
+              </svg>
+  
+            </span>
+  
+            <input
+              [(ngModel)]="codigo"
+              name="codigo"
+              type="number"
+              maxlength="6"
+              placeholder="000000"
+              class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition text-center tracking-[0.5em] text-lg font-semibold">
+  
+          </div>
+  
+          @if(errorCode === 'El codigo ingresado es incorrecto'){
+            <p class="text-red-600 text-sm mt-2 font-medium">
+              El codigo ingresado es incorrecto
+            </p>
+          }
+  
+        </div>
+  
+        <!-- Botón -->
+        <button
+          type="submit"
+          class="w-full py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition duration-300 shadow-lg">
+  
+          Verificar código
+  
+        </button>
+  
+      </form>
+    }@else{
 
-<div>
-  <label>
-    ingrese el codigo de su correo
-  </label>
+      <!-- Título -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-slate-800">
+          Felicidades nuevo usuario
+        </h1>
+  
+        <p class="text-slate-500 mt-2">
+          tu cuenta para eduSystem se creo con exito
+        </p>
+      </div>
+    }
+
+  </div>
+
 </div>
-<div>
-  <input [(ngModel)]="codigo" type="text" placeholder="000000">
-</div>
-<button (submit)="verificarCodigo()">
-  verificar
-</button>
+
+
+<!-- texto plano = {{valor}} = {{nombreEstudiante}}
+
+propiedad = [valor] = [src]
+
+evento = (evento) = (ngSubmit)
+
+el name que ves en el input es importante para el ngmodel 
+debido a que asi puede asociarlo a la variable no puedes 
+omitirlo dentro de un form por lo menos no  -->

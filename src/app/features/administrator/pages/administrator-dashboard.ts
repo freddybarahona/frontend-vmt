@@ -4,7 +4,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ModalComponent } from '../../../shared/components/modal/modal.component';
 import { AuthService } from '../../auth/services/auth-service';
 import { GradeService } from '../../../shared/services/grade.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subject } from 'rxjs';
 import { UserService } from '../../../shared/services/user.service';
 import { SubjectProffesor } from '../../../shared/interfaces/subject-proffesor';
 import { LogicDeleteAdminGradeRequest } from '../../../shared/interfaces/logic-delete-admin-grade-request';
@@ -39,7 +39,7 @@ export class AdministratorDashboard implements OnInit {
   expandedSubjectId: number | null = null
   studentsBySubject: Record<number, GetGradesBySubjectDTO[]> ={}
   modalTitle = '';
-  modalType: 'create' | 'delete P' | null = null;
+  modalType: 'create' | 'delete P' | 'delete S' | null = null;
   newSubjectName: string= ''
 
   ngOnInit(): void {
@@ -64,18 +64,20 @@ export class AdministratorDashboard implements OnInit {
       subjectId: subjectId,
       role: 3
     }
-    this.GradeService.getGradesBySubject(payload).subscribe(response => {
-      this.studentsBySubject[subjectId]= response.data
-      console.log(this.studentsBySubject)
-      this.loadingstudents.set(false)
-    },error=>{
-      this.loadingstudents.set(false)
-    }
-  )}
+    this.GradeService.getGradesBySubject(payload).subscribe({next: (response) => {
+        this.studentsBySubject[subjectId]= response.data
+        //console.log(this.studentsBySubject)
+        this.loadingstudents.set(false)
+      },error: (error)=>{
+        this.loadingstudents.set(false)
+      }
+    })
+  }
 
 
   toggleModal(){
     this.isModalOpen = !this.isModalOpen
+    console.log(this.isModalOpen)
   }
 
   openCreateModal(){
@@ -86,17 +88,17 @@ export class AdministratorDashboard implements OnInit {
   
   crearMateria(name: string){
     this.loading.set(true)
-    this.subjectService.createSubject(name).subscribe(response => {
-      this.obtenerMaterias()
-      this.loading.set(false)
-      this.toggleModal()
-      this.newSubjectName=''
-    },error=> {
-      this.loading.set(false)
-      this.toggleModal()
-      this.newSubjectName=''
-    }
-    )    
+    this.subjectService.createSubject(name).subscribe({next: (response) => {
+        this.obtenerMaterias()
+        this.loading.set(false)
+        this.toggleModal()
+        this.newSubjectName=''
+      },error: (error)=> {
+        this.loading.set(false)
+        this.toggleModal()
+        this.newSubjectName=''
+      }
+    })    
   }
   openLiberarModal(subject: SubjectProffesor){
     this.modalType= 'delete P'
@@ -111,6 +113,28 @@ export class AdministratorDashboard implements OnInit {
     this.isModalOpen=true
   }
 
+  openBorrarMateriaModal(subject: SubjectProffesor){
+    this.modalType= 'delete S'
+    this.modalTitle= 'Borrado de materia'
+    const pase: LogicDeleteAdminGradeRequest={
+      idUser: subject.idUser,
+      idSubject: subject.id,
+      subjectName: subject.subjectName,
+      proffesorName: subject.proffesorName
+    }
+    this.selectedSubject = pase
+    this.toggleModal()
+  }
+
+  borrarMateria(){
+    this.subjectService.hardDeleteSubject(this.selectedSubject!.idSubject).subscribe({next: (response) =>{
+      this.obtenerMaterias()
+      this.toggleModal()
+    },error: (error) =>{
+
+    }})
+  }
+
   borrarGrade(){
     const payload: LogicDeleteAdminGradeRequest={
       idUser: Number(this.selectedSubject?.idUser),
@@ -119,10 +143,9 @@ export class AdministratorDashboard implements OnInit {
       proffesorName: this.selectedSubject!.proffesorName
     }
     this.GradeService.logicDeleteAdminGrade(payload).subscribe(response => {
-      console.log(response.data)
+      //console.log(response.data)
       this.toggleModal()
       this.obtenerMaterias()
-
     })
   }
 
@@ -140,7 +163,7 @@ export class AdministratorDashboard implements OnInit {
         //find devuelve tipo de dato | undefined
         //fiter devuelve tipo de dato
         const proffesor = users.data.find( user => user.id == subjectOccupied?.idUser)
-        console.log(proffesor)
+        //console.log(proffesor)
 
         return{//construye el objeto a guarda en subjectWithProffesor
           id: subject.id,
@@ -150,7 +173,7 @@ export class AdministratorDashboard implements OnInit {
         }
       })
       this.loading.set(false)
-      console.log(subjectsWithProffesor) 
+      //console.log(subjectsWithProffesor) 
       this.subjectsAvailable= subjectsWithProffesor
 
     })

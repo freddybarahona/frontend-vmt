@@ -20,9 +20,18 @@ export class AuthService {
   private apiUrl = environment.apiUrl;
   private branch = `${this.apiUrl}/auth`;
   private platformId= inject(PLATFORM_ID);
+  private flagVerifyCode= false
   constructor(
     private http: HttpClient
   ) {}
+
+  setFlagVerifyCode(value: boolean){
+    this.flagVerifyCode= value
+  }
+
+  getFlagVerifyCode(){
+    return this.flagVerifyCode
+  }
 
   login(req: LoginRequest): Observable<any> {
     return this.http.post(`${this.branch}/login`,req)
@@ -36,7 +45,7 @@ export class AuthService {
     return this.http.post<GenericResponse<void>>(`${this.branch}/request-verification`, req)
   }
 
-  verifyCode(code: string):Observable<GenericResponse<void>>{
+  verifyCode(code: number):Observable<GenericResponse<void>>{
     return this.http.post<GenericResponse<void>>(`${this.branch}/verify-code`, {code: code})
   }
 
