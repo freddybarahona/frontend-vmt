@@ -1,55 +1,59 @@
-<div class="p-6">
+<div class="p-6 bg-white rounded-3xl">
   <div class="mb-6">
-    <h2 class="text-2xl font-bold text-gray-800">
+    <h2 class="text-2xl font-bold text-slate-800">
       Estudiantes de la materia
     </h2>
-    <p class="text-gray-500 text-sm mt-1">
+    <p class="text-slate-500 text-sm mt-1">
       Estudiantes registrados
     </p>
   </div>
   @if(loading()){
     <div class="flex justify-center py-10"> <!-- direccion -->
-      <p class="text-gray-500"><!-- estilo de texto y fondo -->
+      <p class="text-slate-500 font-medium"><!-- estilo de texto y fondo -->
         cargando estudiantes...
       </p>
     </div>
   }
   @if(usersBySubject.length > 0 && !loading()) {
-    <div class="overflow-x-auto rounded-lg shadow">
+    <div class="overflow-x-auto rounded-3xl shadow-xl border border-slate-200">
       <table class="min-w-full bg-white">
-        <thead class="bg-gray-100 border-b">
+        <thead class="bg-slate-100 border-b border-slate-200">
           <tr>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
+            <th class="px-6 py-4 text-center text-sm font-bold text-slate-600 uppercase tracking-wider">
               Nombre
             </th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
+            <th class="px-6 py-4 text-center text-sm font-bold text-slate-600 uppercase tracking-wider">
               Nota
             </th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
+            <th class="px-6 py-4 text-center text-sm font-bold text-slate-600 uppercase tracking-wider">
               Fecha registro
             </th>
-            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-800">
+            <th class="px-6 py-4 text-center text-sm font-bold text-slate-600 uppercase tracking-wider">
               Acciones
             </th>
           </tr>
         </thead>
         <tbody>
           @for (user of usersBySubject; track user.idUser){
-            <tr class="border-b hover:bg-gray-50">
-              <td class="px-6 py-4 text-sm text-gray-800 font-sans">
+            <tr class="border-b border-slate-100 hover:bg-blue-50 transition-colors">
+              <td class="px-6 py-4 text-center text-slate-800 font-medium">
                 {{user.nameUser}}
               </td>
 
-              <td class="px-6 py-4 text-sm text-gray-800">
-                {{user.score}}
+              <td class="px-6 py-4">
+                <div class="flex justify-center">
+                  <span class="inline-flex px-4 py-1 rounded-full bg-blue-100 text-blue-700 font-semibold">
+                    {{ user.score }}
+                  </span>
+                </div>
               </td>
               
-              <td class="px-6 py-4 text-sm text-gray-800">
+              <td class="px-6 py-4 text-center text-slate-700">
                 {{user.createdAt_Grade | date: 'dd/MM/yyyy'}}
               </td>
               
-              <td class="px-6 py-4 text-sm text-gray-800">
-                <button (click)="editarNota(user)" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition">
+              <td class="px-6 py-4 text-center">
+                <button (click)="editarNota(user)" class="rounded-xl bg-blue-600 px-4 py-2 text-white font-medium shadow-md hover:bg-blue-700 transition">
                   Editar nota
                 </button>
               </td>
@@ -58,12 +62,12 @@
         </tbody>
       </table>
       <app-modal [isOpen]="isModalOpen" title="Nota a colocar" (close)="toggleModal()">
-        <label for="nombre">
+        <label for="nombre" class="text-slate-500 font-semibold shadow-lg">
           Nota:
         </label>
         
-        <input class="bg-gray-100 border" type="number" [(ngModel)]="newScore">
-        <button (click)="guardarNota()" class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition">
+        <input type="number" [(ngModel)]="newScore" class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 focus:bg-white focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition">
+        <button (click)="guardarNota()" class="w-full rounded-xl bg-blue-600 px-4 py-3 text-white font-semibold shadow-lg hover:bg-blue-700 transition">
           guardar Nota
         </button>
       </app-modal>

@@ -1,26 +1,39 @@
-<div class="min-h-screen bg-gray-100 p-8">
+<div class="min-h-screen bg-gradient-to-br from-slate-100 to-blue-50 p-8">
 
   <div class="max-w-5xl mx-auto">
 
-    <h1 class="text-4xl font-bold mb-8">
-      Dashboard Profesor {{ proffesorName }}
-    </h1>
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold text-slate-800">
+        Dashboard Profesor {{ proffesorName }}
+      </h1>
 
-    <button (click)="openModal()" class="mb-8 rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 transition">
+      <p class="text-slate-500 mt-2">
+        Gestiona tus materias y estudiantes asignados.
+      </p>
+    </div>
+
+    <button (click)="openModal()" class="mb-8 rounded-xl bg-blue-600 px-5 py-3 text-white font-semibold shadow-lg hover:bg-blue-700 transition">
       Registrar Materia
     </button>
     
     <app-modal [isOpen]="isModalOpen" title="Registrar Materia" (close)="closeModal()">
-      <p>Cantidad: {{ availableSubjects.length }}</p>
-      <p class="mb-4">
+      <p class="font-medium text-slate-700">
+        Cantidad: {{ availableSubjects.length }}
+      </p>
+      <p class="font-medium text-slate-700">
         Selecciona una materia:
       </p>
       @for (subject of availableSubjects; track subject.id) {
-        <div>
-          <span>{{subject.name}}</span>
-          <button (click)="registerGrade(subject.id)" class="bg-blue-600 text-white px-3 py-1 rounded">
-            registrar
+        <div class="flex items-center justify-between py-3 border-b border-slate-100">
+
+          <span class="font-medium text-slate-700">
+            {{ subject.name }}
+          </span>
+
+          <button (click)="registerGrade(subject.id)" class="rounded-xl bg-blue-600 px-4 py-2 text-white font-medium hover:bg-blue-700 transition">
+            Registrar
           </button>
+
         </div>
       }
     </app-modal>
@@ -30,17 +43,17 @@
         Cargando materias...
       </div>
     } @else {
-      <div class="grid gap-4">
-        <h3 class="text-xl font-semibold">
-          materias registradas
-        </h3>
+      <h2 class="text-2xl font-bold text-slate-700 mb-2">
+        Materias Registradas
+      </h2>
+      <div class="grid gap-6 md:grid-cols-3">
         @for(grade of grades; track grade.idSubject) {
-          <div class="rounded-xl bg-white p-5 shadow-md border border-gray-200">
-            <h3 class="text-xl font-semibold">
+          <div class="rounded-3xl bg-white p-6 shadow-xl border border-slate-200 hover:shadow-2xl transition">
+            <h3 class="text-xl font-bold text-slate-800">
               {{ grade.nameSubject }}
             </h3>
             <div (click)="verEstudiantes(grade.idSubject)" class="mt-4">
-              <button class="rounded-lg bg-green-600 px-4 py-2 text-white hover:bg-green-700 transition">
+              <button class="rounded-xl bg-blue-600 px-5 py-2 text-white font-medium shadow-md hover:bg-blue-700 transition">
                 Ver estudiantes
               </button>
             </div>
