@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
 import { Router } from '@angular/router';
@@ -15,6 +15,7 @@ export class LoginComponent {
 
   public email = ''
   public password = ''
+  public errors_back= signal<string[]>([])
 
   constructor( private authService: AuthService, private router: Router
   ){}
@@ -35,8 +36,6 @@ export class LoginComponent {
         console.log(response)
         const token = response.data.token
         this.authService.saveToken(token)
-        console.log(this.authService.getPayload())
-        console.log(this.authService.getRole())
         const role = this.authService.getRole()
 
         switch(role){
@@ -56,7 +55,7 @@ export class LoginComponent {
         }
       },
       error: err => {
-        console.error(err)
+        this.errors_back.set(err.error.errors)
       }
     });
   }

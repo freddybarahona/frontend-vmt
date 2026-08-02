@@ -18,12 +18,10 @@ export class VerifyCodeComponent{
   private cdr = inject(ChangeDetectorRef)
   private router = inject(Router)
   public codigo: number = 0
-  public errorCode=""
+  public errorCode= signal("")
   public verificatedPhase= signal(false)
 
   verificarCodigo(){
-    this.errorCode = ""
-    console.log(this.codigo)
     this.authService.verifyCode(this.codigo).subscribe({
       next: (response) =>{
         console.log(this.codigo)
@@ -33,7 +31,7 @@ export class VerifyCodeComponent{
         }, 4000)// 4 segundos
       },error: (error) =>{
         console.log(this.codigo)
-        this.errorCode=error.error.errors[0]
+        this.errorCode.set(error.error.errors[0])
         this.verificatedPhase.set(false)
       }
     })

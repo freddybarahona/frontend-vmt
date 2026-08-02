@@ -1,7 +1,7 @@
 <div class="min-h-screen bg-slate-100 flex items-center justify-center p-6">
   
   <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl p-8">
-    @if (verificatedPhase == false ) {
+    @if (verificatedPhase() == false ) {
       <!-- Título -->
       <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-slate-800">
@@ -48,7 +48,7 @@
   
           </div>
   
-          @if(errorCode === 'El codigo ingresado es incorrecto'){
+          @if(errorCode() === 'El codigo ingresado es incorrecto'){
             <p class="text-red-600 text-sm mt-2 font-medium">
               El codigo ingresado es incorrecto
             </p>

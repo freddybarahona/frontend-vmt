@@ -74,6 +74,13 @@
               </button>
             </div>
           </div>
+          @if (errors_back().includes('Usuario o contrasena incorrectos')) {
+              <div class="justify-center">
+                <label class="block mb-2 text-red-700 text-sm font-semibold">
+                  Usuario o contrasena incorrectos
+                </label>
+              </div>
+            }
           <!-- Botón -->
           <button type="submit" class="w-full mt-8 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition duration-300 shadow-lg">
             Iniciar Sesión

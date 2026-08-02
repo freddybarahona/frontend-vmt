@@ -50,6 +50,7 @@ export class CreateUserComponent{
     }
     this.authService.correoCodigoVerificacion(payload).subscribe(
       {next: (response) => {
+          this.authService.setFlagVerifyCode(true)
           this.router.navigate(['auth/verifyCode'])
         },error: (error) =>{
           this.errors_back.set(error.error.errors)
