@@ -17,9 +17,9 @@ export class VerifyCodeComponent{
   private authService = inject(AuthService)
   private cdr = inject(ChangeDetectorRef)
   private router = inject(Router)
-  public codigo: number = 123456
+  public codigo: number = 0
   public errorCode=""
-  public verificatedPhase= false
+  public verificatedPhase= signal(false)
 
   verificarCodigo(){
     this.errorCode = ""
@@ -27,15 +27,14 @@ export class VerifyCodeComponent{
     this.authService.verifyCode(this.codigo).subscribe({
       next: (response) =>{
         console.log(this.codigo)
-        this.verificatedPhase= true
-        this.cdr.detectChanges() 
+        this.verificatedPhase.set(true)
         setTimeout(()=>{
           this.router.navigate(['auth/login'])
-        }, 5000)// 7 segundos
+        }, 4000)// 4 segundos
       },error: (error) =>{
         console.log(this.codigo)
         this.errorCode=error.error.errors[0]
-        this.cdr.detectChanges()
+        this.verificatedPhase.set(false)
       }
     })
     /* this.authService.verifyCode(String(this.codigo)).subscribe(
