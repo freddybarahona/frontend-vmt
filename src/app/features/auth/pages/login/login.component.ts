@@ -34,6 +34,7 @@ export class LoginComponent {
     this.authService.login(req).subscribe({
       next: response => {
         const token = response.data.token
+        console.log(token)
         this.authService.saveToken(token)
         const role = this.authService.getRole()
 
