@@ -3,5 +3,6 @@ export interface CorreoCodigoVerificacionRequest {
   name: string
   identificacion: string
   password: string
+  repeatPassword: string
   role: string
 }
