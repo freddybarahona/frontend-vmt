@@ -27,7 +27,7 @@ export class CreateUserComponent{
   public identificacion = ''
   public selectedRole: 'STUDENT' | 'PROFFESOR' | "" = "";
   public errors_back= signal<string[]>([])
-  //reemplaza por: public errors_back: string[] = []
+  //reemplaza por: public errors_back: string[] = [] signal es un generico lo cual lo hace muy util
 
 
 
@@ -53,11 +53,6 @@ export class CreateUserComponent{
     }
     this.authService.correoCodigoVerificacion(payload).subscribe(
       {next: (response) => {
-
-
-
-
-
           this.router.navigate(['auth/verifyCode'])
         },error: (error) =>{
           this.errors_back.set(error.error.errors)
