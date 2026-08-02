@@ -30,9 +30,6 @@ export class CreateUserComponent{
   //reemplaza por: public errors_back: string[] = [] signal es un generico lo cual lo hace muy util
 
 
-
-
-
   togglePassword(data: number): void {
     if(data == 1){
       this.showPassword = !this.showPassword
