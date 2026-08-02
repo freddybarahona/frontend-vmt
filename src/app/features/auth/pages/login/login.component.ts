@@ -33,7 +33,6 @@ export class LoginComponent {
     }
     this.authService.login(req).subscribe({
       next: response => {
-        console.log(response)
         const token = response.data.token
         this.authService.saveToken(token)
         const role = this.authService.getRole()
