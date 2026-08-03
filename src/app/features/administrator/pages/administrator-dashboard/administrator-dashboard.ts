@@ -36,7 +36,7 @@ export class AdministratorDashboard implements OnInit {
   loading = signal(false)
   loadingstudents= signal(false)
   expandedSubjectId: number | null = null
-  studentsBySubject: Record<number, GetGradesBySubjectDTO[]> ={}
+  studentsBySubject= signal<Record<number, GetGradesBySubjectDTO[]>> ({})
   modalTitle = '';
   modalType: 'create' | 'delete P' | 'delete S' | null = null;
   newSubjectName: string= ''
@@ -68,7 +68,8 @@ export class AdministratorDashboard implements OnInit {
       role: 3
     }
     this.GradeService.getGradesBySubject(payload).subscribe({next: (response) => {
-        this.studentsBySubject[subjectId]= response.data
+        this.studentsBySubject.update(current => ({...current,[subjectId]: response.data}))
+        //reemplaza a this.studentsBySubject[subjectId] = response.data
         this.loadingstudents.set(false)
       },error: (error)=>{
         this.loadingstudents.set(false)
@@ -183,3 +184,33 @@ export class AdministratorDashboard implements OnInit {
   }
 
 }
+
+
+/* 
+mira esto:
+studentsBySubject: Record<number, GetGradesBySubjectDTO[]> ={}
+
+se lo rellena asi:
+this.studentsBySubject[subjectId] = response.data
+
+esto es su version primitiva, pero no es reactivo, por lo que no se actualiza la vista cuando se cambia su valor. 
+
+studentsBySubject: {
+  [key: number]: GetGradesBySubjectDTO[]
+} = {}
+
+
+y esto visualmente seria esto 
+
+studentsBySubject = {
+  1: [
+    { idUser: 10, nameUser: 'Juan' },
+    { idUser: 11, nameUser: 'Pedro' }
+  ],
+  2: [
+    { idUser: 15, nameUser: 'Maria' }
+  ]
+}
+
+es un objeto que guarda un arreglo de estudiantes para cada materia.
+*/

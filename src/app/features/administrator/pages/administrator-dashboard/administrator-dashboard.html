@@ -114,13 +114,13 @@
                         </h3>
                       </div>
 
-                      @if(studentsBySubject[subject.id] == null){
+                      @if(studentsBySubject()[subject.id] == null){
                         <div class="px-4 py-3 text-gray-500">
                           No hay estudiantes registrados.
                         </div>
                       }
 
-                      @if(studentsBySubject[subject.id] && studentsBySubject[subject.id].length > 0){
+                      @if(studentsBySubject()[subject.id] && studentsBySubject()[subject.id].length > 0){
                         <table class="w-full text-left">
                           <thead class="bg-gray-100">
                             <tr>
@@ -171,7 +171,7 @@
                                 </td>
                               </tr>
                             }@else {
-                              @for(student of studentsBySubject[subject.id]; track student.idUser){
+                              @for(student of studentsBySubject()[subject.id]; track student.idUser){
                                 <tr class="border-t border-gray-100 hover:bg-gray-50">
                                   <td class="px-4 py-2 text-gray-700">
                                     {{ student.idUser }}
