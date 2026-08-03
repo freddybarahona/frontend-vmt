@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth-service';
+import { AuthService } from '../../../auth/services/auth-service';
 import { CorreoCodigoVerificacionRequest } from '../../../../shared/interfaces/correo-codigo-verificacion-request';
 import { Router } from '@angular/router';
 
@@ -51,7 +51,7 @@ export class CreateUserComponent{
     this.authService.correoCodigoVerificacion(payload).subscribe(
       {next: (response) => {
           this.authService.setFlagVerifyCode(true)
-          this.router.navigate(['auth/verifyCode'])
+          this.router.navigate(['administrator/verifyCode'])
         },error: (error) =>{
           this.errors_back.set(error.error.errors)
           //reemplaza por: this.errors_back = error.error.errors

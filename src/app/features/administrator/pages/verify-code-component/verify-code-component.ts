@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
-import { AuthService } from '../../services/auth-service';
+import { AuthService } from '../../../auth/services/auth-service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-verify-code-component',
+  standalone: true,
   imports: [
     CommonModule,
     FormsModule
@@ -35,15 +36,6 @@ export class VerifyCodeComponent{
         this.verificatedPhase.set(false)
       }
     })
-    /* this.authService.verifyCode(String(this.codigo)).subscribe(
-      {
-        next: (response) =>{
-          //se escribe un mensaje de felicitacion y se regresa al login
-        },
-        error: (error) =>{
-          //se escribe que el mensaje no es correcto y se mantiene en la misma pagina
-        }
-      }) */
   }
 }
 

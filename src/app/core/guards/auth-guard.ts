@@ -14,7 +14,7 @@ export const authGuard: CanActivateFn = (route, state) => { //o no va ni routeni
 
   const token = localStorage.getItem('token')// busca el token en el caso que exista 
   if (!token) { 
-    return router.createUrlTree(['/login']); //si no hay token a login devuelta
+    return router.createUrlTree(['/auth/login']); //si no hay token a login devuelta
   }
   const payload = jwtDecode<JwtPayload>(token)
   /* ojo este JwtPayload es la interfaz que hice yo con mis propiedades de backend
@@ -24,6 +24,7 @@ export const authGuard: CanActivateFn = (route, state) => { //o no va ni routeni
   const role = payload.role //obtiene el role que esta en el token
 
   console.log('token: ',token)
+  
   console.log('role:',role)
   
   const dashboard = getDashboard(role);

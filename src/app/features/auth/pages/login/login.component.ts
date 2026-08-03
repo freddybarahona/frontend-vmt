@@ -60,10 +60,6 @@ export class LoginComponent {
     });
   }
 
-  crearUsuario(){
-    this.router.navigate(['auth/createUser'])
-  }
-
   reestablecerContrasena(){
     console.log('entre')
   }

@@ -1,19 +1,17 @@
-import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
-import { SubjectService } from '../../../shared/services/subject.service';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { SubjectService } from '../../../../shared/services/subject.service';
 import { CommonModule, DatePipe } from '@angular/common';
-import { ModalComponent } from '../../../shared/components/modal/modal.component';
-import { AuthService } from '../../auth/services/auth-service';
-import { GradeService } from '../../../shared/services/grade.service';
+import { ModalComponent } from '../../../../shared/components/modal/modal.component';
+import { AuthService } from '../../../auth/services/auth-service';
+import { GradeService } from '../../../../shared/services/grade.service';
 import { forkJoin, Subject } from 'rxjs';
-import { UserService } from '../../../shared/services/user.service';
-import { SubjectProffesor } from '../../../shared/interfaces/subject-proffesor';
-import { LogicDeleteAdminGradeRequest } from '../../../shared/interfaces/logic-delete-admin-grade-request';
-import { User } from '../../../user';
-import { response } from 'express';
-import { GetGradesBySubjectRequest } from '../../../shared/interfaces/get-grades-by-subject-request';
-import { GetGradesBySubjectDTO } from '../../../shared/interfaces/get-grades-by-subjectDTO';
-import { error } from 'console';
+import { UserService } from '../../../../shared/services/user.service';
+import { SubjectProffesor } from '../../../../shared/interfaces/subject-proffesor';
+import { LogicDeleteAdminGradeRequest } from '../../../../shared/interfaces/logic-delete-admin-grade-request';
+import { GetGradesBySubjectRequest } from '../../../../shared/interfaces/get-grades-by-subject-request';
+import { GetGradesBySubjectDTO } from '../../../../shared/interfaces/get-grades-by-subjectDTO';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-dashboard',
   imports: [
@@ -26,6 +24,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './administrator-dashboard.css',
 })
 export class AdministratorDashboard implements OnInit {
+  private router = inject(Router)
   private subjectService = inject(SubjectService)
   private authService = inject(AuthService)
   private GradeService = inject(GradeService)
@@ -41,12 +40,16 @@ export class AdministratorDashboard implements OnInit {
   modalTitle = '';
   modalType: 'create' | 'delete P' | 'delete S' | null = null;
   newSubjectName: string= ''
-
+  
   ngOnInit(): void {
     this.adminName = this.authService.getUserName()
     this.obtenerMaterias()
   }
-
+  
+  crearUsuario(){
+    this.router.navigate(['administrator/createUser'])
+  }
+  
   toggleSubject(subjectId: number){
     
     if(this.expandedSubjectId == subjectId){
@@ -66,7 +69,6 @@ export class AdministratorDashboard implements OnInit {
     }
     this.GradeService.getGradesBySubject(payload).subscribe({next: (response) => {
         this.studentsBySubject[subjectId]= response.data
-        //console.log(this.studentsBySubject)
         this.loadingstudents.set(false)
       },error: (error)=>{
         this.loadingstudents.set(false)
@@ -100,6 +102,8 @@ export class AdministratorDashboard implements OnInit {
       }
     })    
   }
+
+
   openLiberarModal(subject: SubjectProffesor){
     this.modalType= 'delete P'
     this.modalTitle= 'Liberacion de materia'
