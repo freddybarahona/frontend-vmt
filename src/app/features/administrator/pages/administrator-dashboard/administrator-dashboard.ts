@@ -31,7 +31,7 @@ export class AdministratorDashboard implements OnInit {
   private UserService = inject(UserService)
   isModalOpen=false
   public adminName = ''
-  subjectsAvailable: SubjectProffesor[] =[]
+  subjectsAvailable= signal<SubjectProffesor[]>([])
   selectedSubject: LogicDeleteAdminGradeRequest | null= null;// para el modal de liberar
   loading = signal(false)
   loadingstudents= signal(false)
@@ -177,8 +177,7 @@ export class AdministratorDashboard implements OnInit {
         }
       })
       this.loading.set(false)
-      //console.log(subjectsWithProffesor) 
-      this.subjectsAvailable= subjectsWithProffesor
+      this.subjectsAvailable.set(subjectsWithProffesor)
 
     })
   }
