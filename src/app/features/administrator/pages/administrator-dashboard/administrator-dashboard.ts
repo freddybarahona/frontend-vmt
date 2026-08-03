@@ -179,7 +179,7 @@ export class AdministratorDashboard implements OnInit {
         }
       })
       this.loading.set(false)
-      this.subjectsAvailable.set(subjectsWithProffesor)
+      this.subjectsAvailable.set(subjectsWithProffesor.sort((a,b) => a.id - b.id))//procedo a ordenar por id de materia, para que se vea mas ordenado
 
     })
   }
