@@ -4,7 +4,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 import { AuthService } from '../../../auth/services/auth-service';
 import { GradeService } from '../../../../shared/services/grade.service';
-import { forkJoin, Subject } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { UserService } from '../../../../shared/services/user.service';
 import { SubjectProffesor } from '../../../../shared/interfaces/subject-proffesor';
 import { LogicDeleteAdminGradeRequest } from '../../../../shared/interfaces/logic-delete-admin-grade-request';
@@ -12,6 +12,7 @@ import { GetGradesBySubjectRequest } from '../../../../shared/interfaces/get-gra
 import { GetGradesBySubjectDTO } from '../../../../shared/interfaces/get-grades-by-subjectDTO';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-dashboard',
   imports: [
