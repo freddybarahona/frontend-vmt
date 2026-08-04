@@ -25,7 +25,7 @@ export class CreateUserComponent{
   public repeatPassword= ''
   public showRepeatPassword = false
   public identificacion = ''
-  public selectedRole: 'STUDENT' | 'PROFFESOR' | "" = "";
+  public selectedRole: 'STUDENT' | 'PROFFESOR' | 'ADMINISTRATOR' | "" = "";
   public errors_back= signal<string[]>([])
   //reemplaza por: public errors_back: string[] = [] signal es un generico lo cual lo hace muy util
 
