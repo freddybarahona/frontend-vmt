@@ -120,7 +120,7 @@
                         </div>
                       }
 
-                      @if(studentsBySubject()[subject.id] && studentsBySubject()[subject.id].length > 0){
+                      @if(studentsBySubject()[subject.id] && studentsBySubject()[subject.id]!.length > 0){<!--  ! hay que estar pendiente si hay algun error -->
                         <table class="w-full text-left">
                           <thead class="bg-gray-100">
                             <tr>

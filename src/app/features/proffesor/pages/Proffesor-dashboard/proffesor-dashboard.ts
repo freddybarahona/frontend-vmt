@@ -23,10 +23,10 @@ export class ProffesorDashboard implements OnInit {
   private authService = inject(AuthService)
   private gradeService= inject(GradeService)
   private subjectService= inject(SubjectService)
-  private cdr = inject(ChangeDetectorRef)
   public proffesorName = ''
-  availableSubjects: Subject[] = []
-  grades: Grade[] = []
+  public errors_back = signal<string[]>([])
+  availableSubjects= signal<Subject[]>([])
+  grades= signal<Grade[]>([])
   loading = signal(false)
   isModalOpen = false
   
@@ -60,13 +60,17 @@ export class ProffesorDashboard implements OnInit {
 
   obtenerGrade(id: number){
     this.loading.set(true)
-    this.gradeService.getGradesByUser(id).subscribe(
-      response => {
+    this.gradeService.getGradesByUser(id).subscribe({next: (response) =>
+      {
         this.loading.set(false)
         console.log('Response:', response)
-        this.grades = response.data
+        this.grades.set(response.data)
+      }, error: (error) => {
+        this.loading.set(false)
+        this.errors_back.set(error.error.errors[0])
+
       }
-    )
+    })
   }
   
   verEstudiantes(subjectId: number){
@@ -82,8 +86,7 @@ export class ProffesorDashboard implements OnInit {
         
         const occupiedSubjects = gradeResponse.data.filter(grade => grade.role == 'PROFFESOR').map(grade => grade.idSubject)
 
-        this.availableSubjects = subjectResponse.data.filter(subject => !occupiedSubjects.includes(subject.id))
-        this.cdr.detectChanges()
+        this.availableSubjects.set(subjectResponse.data.filter(subject => !occupiedSubjects.includes(subject.id)))
       })
     })
   }
