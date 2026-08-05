@@ -39,7 +39,7 @@ export class SubjectStudents implements OnInit {
     if(!this.isModalOpen){
       
     }
-    this.isModalOpen.set(!this.isModalOpen)  //lo contrario
+    this.isModalOpen.update(button =>!this.isModalOpen)  //lo contrario
   }
 
   obtenerGradesBySubject(subjectId: number, roleUsers: number){
