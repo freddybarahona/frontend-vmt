@@ -93,7 +93,7 @@
                     <!-- botones de accion para filas -->
                     <div class="flex justify-center gap-3">
                       @if(subject.proffesorName != 'sin asignar'){
-                        <button (click)="openLiberarModal(subject)" class="rounded-xl bg-slate-100 px-4 py-2 text-slate-700 font-medium hover:bg-slate-200 transition shadow-sm">
+                        <button (click)="openLiberarModal(subject); $event.stopPropagation()" class="rounded-xl bg-slate-100 px-4 py-2 text-slate-700 font-medium hover:bg-slate-200 transition shadow-sm">
                           Liberar
                         </button>
                       }

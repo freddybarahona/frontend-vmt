@@ -22,13 +22,13 @@ import { FormsModule } from '@angular/forms';
 export class SubjectStudents implements OnInit {
   private route = inject(ActivatedRoute)
   private gradeService= inject(GradeService)
-  private cdr = inject(ChangeDetectorRef)
   
   selectedUser?: GetGradesBySubjectDTO 
   newScore = 0
-  usersBySubject: GetGradesBySubjectDTO[] = [] 
+  usersBySubject= signal<GetGradesBySubjectDTO[]>([]) 
   loading= signal(false) 
   isModalOpen= false
+  public errors_back = signal<string[]>([])
   ngOnInit(): void {
     const subjectId = Number(this.route.snapshot.paramMap.get('subjectId'))
     console.log(subjectId)
@@ -48,11 +48,16 @@ export class SubjectStudents implements OnInit {
       subjectId: subjectId,
       role: roleUsers
     }
-    this.gradeService.getGradesBySubject(payload).subscribe(response =>{
+    this.gradeService.getGradesBySubject(payload).subscribe(
+      {next: (response) =>{
+        this.usersBySubject.set(response.data)
+        console.log(response)
+        this.loading.set(false)
+      },error: (error) =>{
+        this.errors_back.set(error.error.errors[0])
 
-      this.usersBySubject= response.data
-      console.log(response)
-      this.loading.set(false)
+        this.loading.set(false)
+      }
     })
   }
 
@@ -75,7 +80,6 @@ export class SubjectStudents implements OnInit {
       console.log(response.data)
       this.selectedUser!.score = String(this.newScore)
       this.toggleModal()
-      this.cdr.detectChanges()
     })
   }
 }

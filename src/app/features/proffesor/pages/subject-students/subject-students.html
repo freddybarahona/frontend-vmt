@@ -34,7 +34,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (user of usersBySubject; track user.idUser){
+          @for (user of usersBySubject(); track user.idUser){
             <tr class="border-b border-slate-100 hover:bg-blue-50 transition-colors">
               <td class="px-6 py-4 text-center text-slate-800 font-medium">
                 {{user.nameUser}}
@@ -71,7 +71,12 @@
           guardar Nota
         </button>
       </app-modal>
-
+      
     </div>
+  }
+  @if(usersBySubject().length == 0){
+    <h2 class="text-2xl font-bold text-slate-800">
+      No hay estudiantes registrados en esta materia
+    </h2>
   }
 </div>

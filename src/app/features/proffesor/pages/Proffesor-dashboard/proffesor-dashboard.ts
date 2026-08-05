@@ -83,11 +83,13 @@ export class ProffesorDashboard implements OnInit {
     this.subjectService.getAll().subscribe(subjectResponse =>{
 
       this.gradeService.getAllGrades().subscribe(gradeResponse => {
-        
-        const occupiedSubjects = gradeResponse.data.filter(grade => grade.role == 'PROFFESOR').map(grade => grade.idSubject)
-
-        this.availableSubjects.set(subjectResponse.data.filter(subject => !occupiedSubjects.includes(subject.id)))
+        const gradesData = gradeResponse.data ?? []
+        const subjectData = subjectResponse.data ?? []
+        const occupiedSubjects = gradesData.filter(grade => grade.role == 'PROFFESOR').map(grade => grade.idSubject)
+        this.availableSubjects.set(subjectData.filter(subject => !occupiedSubjects.includes(subject.id)))
       })
+      console.log('entre')
+      console.log(this.availableSubjects)
     })
   }
 }
