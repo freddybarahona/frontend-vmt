@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { jwtDecode } from 'jwt-decode';
 import { Observable } from 'rxjs';
 import { JwtPayload } from '../interfaces/jwt-payload.interface';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 import { GenericResponse } from '../../../core/interfaces/genericResponse';
 import { User } from '../../../user';
 import { CreateUserRequest } from '../../../shared/interfaces/create-user-request';

@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment'; //siempre ingresa a el environment de prod porque angular se encargara de cambiar entre environment
 import { User } from '../../user';
 import { GenericResponse } from '../../core/interfaces/genericResponse';
 import { Observable } from 'rxjs';
