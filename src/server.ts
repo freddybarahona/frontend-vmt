@@ -12,7 +12,7 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 const app = express();
 const angularApp = new AngularNodeAppEngine({
   trustProxyHeaders: true,
-  allowedHosts:["frontend-vmt.onrender.com"]
+  allowedHosts:["frontend-vmt.onrender.com"] //esto permite que las cabeceras por ejemplo que te coloca el servidor donde se aloje la app
 });//este cambio ayuda en produccion
 
 /**

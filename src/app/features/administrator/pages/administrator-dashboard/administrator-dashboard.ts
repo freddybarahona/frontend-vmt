@@ -41,6 +41,7 @@ export class AdministratorDashboard implements OnInit {
   modalTitle = '';
   modalType: 'create' | 'delete P' | 'delete S' | null = null;
   newSubjectName: string= ''
+  errors_back= signal<string[]>([])
   
   ngOnInit(): void {
     this.adminName = this.authService.getUserName()
@@ -137,7 +138,7 @@ export class AdministratorDashboard implements OnInit {
       this.obtenerMaterias()
       this.toggleModal()
     },error: (error) =>{
-
+      this.errors_back.set(error.error.errors[0])
     }})
   }
 
@@ -161,7 +162,7 @@ export class AdministratorDashboard implements OnInit {
       subjects: this.subjectService.getAll(),
       grades: this.GradeService.getAllGrades(),
       users: this.UserService.getAll()
-    }).subscribe(({subjects, grades, users}) =>{
+    }).subscribe({next: ({subjects, grades, users}) =>{
       const subjectsWithProffesor = subjects.data.map(subject => { 
         //busca el registro de profesor para esta materia 
         const subjectOccupied= grades.data.find(grade => grade.idSubject == subject.id && grade.role == 'PROFFESOR')
@@ -181,6 +182,10 @@ export class AdministratorDashboard implements OnInit {
       this.loading.set(false)
       this.subjectsAvailable.set(subjectsWithProffesor.sort((a,b) => a.id - b.id))//procedo a ordenar por id de materia, para que se vea mas ordenado
 
+      },error: (error) =>{ 
+
+
+      }
     })
   }
 
