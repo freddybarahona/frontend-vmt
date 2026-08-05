@@ -100,7 +100,7 @@ export class AdministratorDashboard implements OnInit {
         this.newSubjectName=''
       },error: (error)=> {
         this.loading.set(false)
-        this.toggleModal()
+        this.errors_back.set(error.error.errors[0])
         this.newSubjectName=''
       }
     })    
