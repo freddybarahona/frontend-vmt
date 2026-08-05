@@ -61,7 +61,7 @@
           }
         </tbody>
       </table>
-      <app-modal [isOpen]="isModalOpen" title="Nota a colocar" (close)="toggleModal()">
+      <app-modal [isOpen]="isModalOpen()" title="Nota a colocar" (close)="toggleModal()">
         <label for="nombre" class="text-slate-500 font-semibold shadow-lg">
           Nota:
         </label>
@@ -70,6 +70,13 @@
         <button (click)="guardarNota()" class="w-full rounded-xl bg-blue-600 px-4 py-3 text-white font-semibold shadow-lg hover:bg-blue-700 transition">
           guardar Nota
         </button>
+        @if(this.errors_back().length > 0){
+          <div class="justify-center">
+            <label class="block mb-2 text-red-700 text-sm font-semibold">
+              {{this.errors_back()}}
+            </label>
+          </div>
+        }
       </app-modal>
       
     </div>

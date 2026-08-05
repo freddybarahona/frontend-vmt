@@ -27,7 +27,7 @@ export class SubjectStudents implements OnInit {
   newScore = 0
   usersBySubject= signal<GetGradesBySubjectDTO[]>([]) 
   loading= signal(false) 
-  isModalOpen= false
+  isModalOpen= signal(false)
   public errors_back = signal<string[]>([])
   ngOnInit(): void {
     const subjectId = Number(this.route.snapshot.paramMap.get('subjectId'))
@@ -39,7 +39,7 @@ export class SubjectStudents implements OnInit {
     if(!this.isModalOpen){
       
     }
-    this.isModalOpen = !this.isModalOpen  //lo contrario
+    this.isModalOpen.set(!this.isModalOpen)  //lo contrario
   }
 
   obtenerGradesBySubject(subjectId: number, roleUsers: number){
@@ -76,10 +76,13 @@ export class SubjectStudents implements OnInit {
       studentId: this.selectedUser.idUser,
       score: this.newScore/* el valor ingresara del modal por ahora se quemara */
     }
-    this.gradeService.updateGradeStudentByProf(payload).subscribe(response => {
+    this.gradeService.updateGradeStudentByProf(payload).subscribe({next: (response) => {
       console.log(response.data)
       this.selectedUser!.score = String(this.newScore)
       this.toggleModal()
-    })
+    },error: (error) => {
+      this.errors_back.set(error.error.errors[0])
+    }
+  })
   }
 }
