@@ -61,6 +61,7 @@ export class SubjectStudents implements OnInit {
 
 
   editarNota(user: GetGradesBySubjectDTO){// etapa 1 entra, guarda el usuario, guarda la nota actual, abre el modal 
+    this.errors_back.set([])
     this.selectedUser = user
     this.newScore = Number(user.score)
     this.toggleModal()
