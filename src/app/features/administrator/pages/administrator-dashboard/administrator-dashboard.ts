@@ -120,14 +120,14 @@ export class AdministratorDashboard implements OnInit {
     this.isModalOpen=true
   }
 
-  openBorrarMateriaModal(subject: SubjectProffesor){
+  openBorrarMateriaModal(idsubject: number, subjectName: string){
     this.modalType= 'delete S'
     this.modalTitle= 'Borrado de materia'
     const pase: LogicDeleteAdminGradeRequest={
-      idUser: subject.idUser,
-      idSubject: subject.id,
-      subjectName: subject.subjectName,
-      proffesorName: subject.proffesorName
+      idSubject: idsubject,
+      subjectName: subjectName,
+      idUser: 0,
+      proffesorName: ''
     }
     this.selectedSubject = pase
     this.toggleModal()
@@ -138,6 +138,7 @@ export class AdministratorDashboard implements OnInit {
       this.obtenerMaterias()
       this.toggleModal()
     },error: (error) =>{
+      this.loading.set(false)
       this.errors_back.set(error.error.errors[0])
     }})
   }
@@ -163,13 +164,17 @@ export class AdministratorDashboard implements OnInit {
       grades: this.GradeService.getAllGrades(),
       users: this.UserService.getAll()
     }).subscribe({next: ({subjects, grades, users}) =>{
-      const subjectsWithProffesor = subjects.data.map(subject => { 
+      const subjectsData= subjects.data ?? [] //filtro para entrada de datos limpios en caso de retornar nulo se cambia a un array vacio para todos
+      const gradesData = grades.data ?? [] 
+      const usersData = users.data ?? []
+
+      const subjectsWithProffesor = subjectsData.map(subject => { 
         //busca el registro de profesor para esta materia 
-        const subjectOccupied= grades.data.find(grade => grade.idSubject == subject.id && grade.role == 'PROFFESOR')
+        const subjectOccupied= gradesData.find(grade => grade.idSubject == subject.id && grade.role == 'PROFFESOR')
         //busca el usuario profesor
         //find devuelve tipo de dato | undefined
         //fiter devuelve tipo de dato
-        const proffesor = users.data.find( user => user.id == subjectOccupied?.idUser)
+        const proffesor = usersData.find( user => user.id == subjectOccupied?.idUser)
         //console.log(proffesor)
 
         return{//construye el objeto a guarda en subjectWithProffesor
@@ -181,16 +186,20 @@ export class AdministratorDashboard implements OnInit {
       })
       this.loading.set(false)
       this.subjectsAvailable.set(subjectsWithProffesor.sort((a,b) => a.id - b.id))//procedo a ordenar por id de materia, para que se vea mas ordenado
-
+      console.log(subjectsWithProffesor)
       },error: (error) =>{ 
-
+        this.loading.set(false)
+        this.errors_back.set(error.error.errors[0])
 
       }
+      
     })
   }
-
+  
 }
-
+//el forkJoin trabaja de manera particular no es facil trabajar con los errores:
+/* esto se debe a que como son 3 subscribe a la vez si 1 minimo entra con un ok entonces nunca entrara en error y queda en un bucle raro
+por eso hay que ponerlos en los casos que convengan como todos ok o todos error en el caso de que */
 
 /* 
 mira esto:

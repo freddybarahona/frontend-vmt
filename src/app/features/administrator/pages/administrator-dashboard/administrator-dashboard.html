@@ -77,127 +77,137 @@
             </div>
           }
           @if(!loading()){
-            @for(subject of subjectsAvailable(); track subject.id){
-              <tr (click)="toggleSubject(subject.id)" class="hover:bg-blue-50 transition-colors cursor-pointer">
-                <td class="px-6 py-4 text-gray-700">
-                  {{subject.id}}
-                </td>
-                <td class="px-6 py-4 font-medium text-gray-800">
-                  {{subject.subjectName}}
-                </td>
-                <td class="px-6 py-4 text-gray-700">
-                  {{subject.proffesorName}}
-                </td>
-                <td class="flex px-6 py-4">
-                  <!-- botones de accion superior -->
-                  <div class="flex justify-center gap-3">
-                    @if(subject.proffesorName != 'sin asignar'){
-                      <button (click)="openLiberarModal(subject)" class="rounded-xl bg-slate-100 px-4 py-2 text-slate-700 font-medium hover:bg-slate-200 transition shadow-sm">
-                        Liberar
-                      </button>
-                    }
-                      <button (click)="openBorrarMateriaModal(subject)" class="rounded-xl bg-red-500 px-4 py-2 text-white font-medium hover:bg-red-600 transition shadow-sm">
-                        Borrar materia
-                      </button>
-                    </div>
-                </td>
-              </tr>
-              <!-- EXPANDIBLE ESTUDIANTES -->
-              @if(expandedSubjectId == subject.id){
-                <tr class="bg-gray-50">
-                  <td colspan="4" class="px-6 py-4">
-
-                    <div class="rounded-2xl border border-slate-200 bg-slate-50 overflow-hidden">
-
-                      <div class="px-4 py-3 border-b border-slate-200 bg-white">
-                        <h3 class="font-semibold text-slate-700">
-                          Estudiantes registrados
-                        </h3>
+            @if(subjectsAvailable().length> 0){
+              @for(subject of subjectsAvailable(); track subject.id){
+                <tr (click)="toggleSubject(subject.id)" class="hover:bg-blue-50 transition-colors cursor-pointer">
+                  <td class="px-6 py-4 text-gray-700">
+                    {{subject.id}}
+                  </td>
+                  <td class="px-6 py-4 font-medium text-gray-800">
+                    {{subject.subjectName}}
+                  </td>
+                  <td class="px-6 py-4 text-gray-700">
+                    {{subject.proffesorName}}
+                  </td>
+                  <td class="flex px-6 py-4">
+                    <!-- botones de accion para filas -->
+                    <div class="flex justify-center gap-3">
+                      @if(subject.proffesorName != 'sin asignar'){
+                        <button (click)="openLiberarModal(subject)" class="rounded-xl bg-slate-100 px-4 py-2 text-slate-700 font-medium hover:bg-slate-200 transition shadow-sm">
+                          Liberar
+                        </button>
+                      }
+                        <button (click)="openBorrarMateriaModal(subject.id, subject.subjectName); $event.stopPropagation()"  class="rounded-xl bg-red-500 px-4 py-2 text-white font-medium hover:bg-red-600 transition shadow-sm">
+                          Borrar materia
+                        </button>
+                        <!-- el eventPropagation ayuda a evitar errores con otras acciones que se activan en este caso en la misma fila como el get studentsBySubject -->
                       </div>
-
-                      @if(studentsBySubject()[subject.id] == null){
-                        <div class="px-4 py-3 text-gray-500">
-                          No hay estudiantes registrados.
-                        </div>
-                      }
-
-                      @if(studentsBySubject()[subject.id] && studentsBySubject()[subject.id]!.length > 0){<!--  ! hay que estar pendiente si hay algun error -->
-                        <table class="w-full text-left">
-                          <thead class="bg-gray-100">
-                            <tr>
-                              <th class="px-4 py-2 text-sm font-semibold text-gray-600 uppercase">
-                                ID
-                              </th>
-                              <th class="px-4 py-2 text-sm font-semibold text-gray-600 uppercase">
-                                Nombre
-                              </th>
-                              <th class="px-4 py-2 text-sm font-semibold text-gray-600 uppercase">
-                                Fecha de inscripción
-                              </th>
-                            </tr>
-                          </thead>
-
-                          <tbody>
-                            @if (loadingstudents()) {
-                              <tr class="bg-gray-50">
-                                <td colspan="4" class="px-6 py-4">
-                                  <div class="rounded-lg border border-gray-200 bg-white">
-                                    <div class="flex items-center gap-3 px-4 py-3 text-gray-500">
-              
-                                      <svg
-                                        class="h-5 w-5 animate-spin"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24">
-                                        <circle
-                                          class="opacity-25"
-                                          cx="12"
-                                          cy="12"
-                                          r="10"
-                                          stroke="currentColor"
-                                          stroke-width="4">
-                                        </circle>
-                                        <path
-                                          class="opacity-75"
-                                          fill="currentColor"
-                                          d="M4 12a8 8 0 018-8v8z">
-                                        </path>
-                                      </svg>
-              
-                                      <span>Cargando estudiantes...</span>
-              
-                                    </div>
-                                  </div>
-              
-                                </td>
-                              </tr>
-                            }@else {
-                              @for(student of studentsBySubject()[subject.id]; track student.idUser){
-                                <tr class="border-t border-gray-100 hover:bg-gray-50">
-                                  <td class="px-4 py-2 text-gray-700">
-                                    {{ student.idUser }}
-                                  </td>
-  
-                                  <td class="px-4 py-2 text-gray-800 font-medium">
-                                    {{ student.nameUser }}
-                                  </td>
-  
-                                  <td class="px-4 py-2 text-gray-700">
-                                    {{ student.createdAt_Grade | date:'dd/MM/yyyy' }}
-                                  </td>
-                                </tr>
-                              }
-                            }
-                          </tbody>
-                        </table>
-                      }
-
-                    </div>
-
                   </td>
                 </tr>
-
+                <!-- EXPANDIBLE ESTUDIANTES -->
+                @if(expandedSubjectId == subject.id){
+                  <tr class="bg-gray-50">
+                    <td colspan="4" class="px-6 py-4">
+  
+                      <div class="rounded-2xl border border-slate-200 bg-slate-50 overflow-hidden">
+  
+                        <div class="px-4 py-3 border-b border-slate-200 bg-white">
+                          <h3 class="font-semibold text-slate-700">
+                            Estudiantes registrados
+                          </h3>
+                        </div>
+  
+                        @if(studentsBySubject()[subject.id] == null){
+                          <div class="px-4 py-3 text-gray-500">
+                            No hay estudiantes registrados.
+                          </div>
+                        }
+  
+                        @if(studentsBySubject()[subject.id] || studentsBySubject()[subject.id]!.length > 0){<!--  ! hay que estar pendiente si hay algun error -->
+                          <table class="w-full text-left">
+                            <thead class="bg-gray-100">
+                              <tr>
+                                <th class="px-4 py-2 text-sm font-semibold text-gray-600 uppercase">
+                                  ID
+                                </th>
+                                <th class="px-4 py-2 text-sm font-semibold text-gray-600 uppercase">
+                                  Nombre
+                                </th>
+                                <th class="px-4 py-2 text-sm font-semibold text-gray-600 uppercase">
+                                  Fecha de inscripción
+                                </th>
+                              </tr>
+                            </thead>
+  
+                            <tbody>
+                              @if (loadingstudents()) {
+                                <tr class="bg-gray-50">
+                                  <td colspan="4" class="px-6 py-4">
+                                    <div class="rounded-lg border border-gray-200 bg-white">
+                                      <div class="flex items-center gap-3 px-4 py-3 text-gray-500">
+                
+                                        <svg
+                                          class="h-5 w-5 animate-spin"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          fill="none"
+                                          viewBox="0 0 24 24">
+                                          <circle
+                                            class="opacity-25"
+                                            cx="12"
+                                            cy="12"
+                                            r="10"
+                                            stroke="currentColor"
+                                            stroke-width="4">
+                                          </circle>
+                                          <path
+                                            class="opacity-75"
+                                            fill="currentColor"
+                                            d="M4 12a8 8 0 018-8v8z">
+                                          </path>
+                                        </svg>
+                
+                                        <span>Cargando estudiantes...</span>
+                
+                                      </div>
+                                    </div>
+                
+                                  </td>
+                                </tr>
+                              }@else {
+                                @for(student of studentsBySubject()[subject.id]; track student.idUser){
+                                  <tr class="border-t border-gray-100 hover:bg-gray-50">
+                                    <td class="px-4 py-2 text-gray-700">
+                                      {{ student.idUser }}
+                                    </td>
+    
+                                    <td class="px-4 py-2 text-gray-800 font-medium">
+                                      {{ student.nameUser }}
+                                    </td>
+    
+                                    <td class="px-4 py-2 text-gray-700">
+                                      {{ student.createdAt_Grade | date:'dd/MM/yyyy' }}
+                                    </td>
+                                  </tr>
+                                }
+                              }
+                            </tbody>
+                          </table>
+                        }
+  
+                      </div>
+  
+                    </td>
+                  </tr>
+  
+                }
               }
+
+            }@if(subjectsAvailable().length== 0){
+              <div class="px-6 py-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+                <h2 class="text-xl font-bold text-slate-700">
+                  No hay materias para mostrar
+                </h2>
+              </div>
             }
           }
         </tbody>

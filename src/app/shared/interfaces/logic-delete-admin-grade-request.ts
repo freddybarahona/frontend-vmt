@@ -1,6 +1,6 @@
 export interface LogicDeleteAdminGradeRequest {
-  idUser: number
   idSubject: number
   subjectName: string
+  idUser: number,
   proffesorName: string
 }
