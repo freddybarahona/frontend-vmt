@@ -52,11 +52,16 @@ export class AuthService {
   }
 
   saveToken(token: string): void {
-    localStorage.setItem('token', token);
+    if(isPlatformBrowser(this.platformId)){
+      localStorage.setItem('token', token)
+    }
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    if(isPlatformBrowser(this.platformId)){
+      return localStorage.getItem('token')
+    }
+    return null
   }
 
   getPayload(): JwtPayload | null {
