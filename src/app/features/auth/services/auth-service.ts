@@ -11,6 +11,7 @@ import { LoginRequest } from '../../../login-request';
 import { isPlatformBrowser } from '@angular/common';
 import { inject, PLATFORM_ID } from '@angular/core'
 import { CorreoCodigoVerificacionRequest } from '../../../shared/interfaces/correo-codigo-verificacion-request';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class AuthService {
   private branch = `${this.apiUrl}/auth`;
   private platformId= inject(PLATFORM_ID);
   private flagVerifyCode= false
+  private router= inject(Router)
   constructor(
     private http: HttpClient
   ) {}
@@ -72,6 +74,22 @@ export class AuthService {
     return this.getPayload()?.role ?? null;
   }
 
+  redirect(role: string){
+    switch(role){
+      case "ADMINISTRATOR":
+        this.router.navigate(["/administrator"])
+        break
+        case "PROFFESOR":
+        this.router.navigate(["/proffesor"])
+        break
+      case "STUDENT":
+        this.router.navigate(["/student"])
+        break
+    }
+
+
+  }
+
   getUserId(): number{
     const id =this.getPayload()?.id ?? 0;
     
@@ -85,5 +103,6 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
+    this.router.navigate(['/auth/login'])
   }
 }

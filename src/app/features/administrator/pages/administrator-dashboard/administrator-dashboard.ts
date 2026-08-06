@@ -12,6 +12,7 @@ import { GetGradesBySubjectRequest } from '../../../../shared/interfaces/get-gra
 import { GetGradesBySubjectDTO } from '../../../../shared/interfaces/get-grades-by-subjectDTO';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HeaderComponent } from '../../../../shared/components/header-component/header-component';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +20,8 @@ import { Router } from '@angular/router';
     CommonModule,
     DatePipe,
     ModalComponent,
-    FormsModule
+    FormsModule,
+    HeaderComponent
   ],
   templateUrl: './administrator-dashboard.html',
   styleUrl: './administrator-dashboard.css',
