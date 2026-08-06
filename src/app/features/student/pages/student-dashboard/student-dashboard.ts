@@ -24,10 +24,11 @@ export class StudentDashboardComponent implements OnInit {
   private SubjectService = inject(SubjectService)
   private authService = inject(AuthService)
   public studentName = ''
+  public error_back = signal<string[]>([])
   private cdr = inject(ChangeDetectorRef)
   isModalOpen = false
   availableSubjects: Subject[] = []
-  grades: Grade[] = [];
+  grades= signal<Grade[]>([])
   loading = signal(false)
 
   ngOnInit(): void {
@@ -84,10 +85,14 @@ export class StudentDashboardComponent implements OnInit {
     this.loading.set(true)
     this.gradeService
       .getGradesByUser(id)
-      .subscribe(response =>{
+      .subscribe({next: (response) =>{
           this.loading.set(false)
           console.log('Response:', response)
-          this.grades = response.data;
-      })
+          this.grades.set(response.data)
+      },error: (error) =>{
+          this.loading.set(false)
+          this.error_back.set(error.error.errors[0])
+      }
+    })
   }
 }

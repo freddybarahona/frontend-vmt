@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth-service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -16,7 +16,6 @@ import { Router } from '@angular/router';
 })
 export class VerifyCodeComponent{
   private authService = inject(AuthService)
-  private cdr = inject(ChangeDetectorRef)
   private router = inject(Router)
   public codigo: number = 0
   public errorCode= signal("")
