@@ -90,10 +90,10 @@
 
       <tbody>
         @if(!loading()){
-          @if(grades.length === 0){
+          @if(grades().length === 0){
             <tr>
               <td colspan="2" class="text-center py-12 text-slate-500 font-medium">
-                No tienes materias registradas.
+                {{error_back()}}
               </td>
 
             </tr>
