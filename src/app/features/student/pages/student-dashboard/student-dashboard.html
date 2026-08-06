@@ -24,7 +24,7 @@
       <p class="text-slate-600">
         Materias registradas:
         <span class="font-bold text-blue-600 text-lg">
-          {{ grades.length }}
+          {{ grades().length }}
         </span>
       </p>
 
@@ -98,7 +98,7 @@
 
             </tr>
           }@else{
-            @for(grade of grades; track grade.idSubject){
+            @for(grade of grades(); track grade.idSubject){
               <tr class="hover:bg-blue-50 transition-colors">
                 <td class="px-6 py-4 text-center text-slate-700">
                   {{ grade.nameSubject }}
