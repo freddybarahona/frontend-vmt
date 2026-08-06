@@ -97,7 +97,7 @@
               </td>
 
             </tr>
-          }@else{
+          }@if(grades().length > 0){
             @for(grade of grades(); track grade.idSubject){
               <tr class="hover:bg-blue-50 transition-colors">
                 <td class="px-6 py-4 text-center text-slate-700">
