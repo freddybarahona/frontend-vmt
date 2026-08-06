@@ -8,12 +8,14 @@ import { Router } from '@angular/router';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 import { SubjectService } from '../../../../shared/services/subject.service';
 import { Subject } from '../../../../shared/interfaces/subject';
+import { HeaderComponent } from '../../../../shared/components/header-component/header-component';
 
 @Component({
   selector: 'app-proffesor-dashboard',
   imports: [
     CommonModule,
     ModalComponent,
+    HeaderComponent
   ],
   templateUrl: './proffesor-dashboard.html',
   styleUrl: './proffesor-dashboard.css',

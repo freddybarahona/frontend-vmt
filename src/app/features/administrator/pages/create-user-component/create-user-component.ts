@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../auth/services/auth-service';
 import { CorreoCodigoVerificacionRequest } from '../../../../shared/interfaces/correo-codigo-verificacion-request';
 import { Router } from '@angular/router';
+import { HeaderComponent } from '../../../../shared/components/header-component/header-component';
 
 @Component({
   selector: 'app-create-user-component',
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    HeaderComponent
   ],
   templateUrl: './create-user-component.html',
   styleUrl: './create-user-component.css',

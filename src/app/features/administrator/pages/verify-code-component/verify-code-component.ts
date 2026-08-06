@@ -3,13 +3,15 @@ import { Component, inject, signal } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth-service';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HeaderComponent } from '../../../../shared/components/header-component/header-component';
 
 @Component({
   selector: 'app-verify-code-component',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    HeaderComponent
   ],
   templateUrl: './verify-code-component.html',
   styleUrl: './verify-code-component.css',

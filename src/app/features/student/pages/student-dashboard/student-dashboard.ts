@@ -8,12 +8,14 @@ import { SubjectService } from '../../../../shared/services/subject.service';
 import { Subject } from '../../../../shared/interfaces/subject';
 import { forkJoin } from 'rxjs';
 import { CreateGradeRequest } from '../../../../shared/interfaces/create-grade-request';
+import { HeaderComponent } from '../../../../shared/components/header-component/header-component';
 
 @Component({
   selector: 'app-student-dashboard',
   imports: [
     CommonModule,
-    ModalComponent
+    ModalComponent,
+    HeaderComponent
   ],
   templateUrl: './student-dashboard.html',
   styleUrl: './student-dashboard.css',

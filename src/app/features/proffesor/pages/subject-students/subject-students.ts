@@ -7,6 +7,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { UpdateGradeStudentRequest } from '../../../../shared/interfaces/update-grade-student-request';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from '../../../../shared/components/header-component/header-component';
 
 @Component({
   selector: 'app-subject-students',
@@ -14,7 +15,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     DatePipe,
     ModalComponent,
-    FormsModule
+    FormsModule,
+    HeaderComponent
   ],
   templateUrl: './subject-students.html',
   styleUrl: './subject-students.css',
