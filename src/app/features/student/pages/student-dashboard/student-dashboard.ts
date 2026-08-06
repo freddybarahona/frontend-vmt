@@ -25,9 +25,8 @@ export class StudentDashboardComponent implements OnInit {
   private authService = inject(AuthService)
   public studentName = ''
   public error_back = signal<string[]>([])
-  private cdr = inject(ChangeDetectorRef)
   isModalOpen = false
-  availableSubjects: Subject[] = []
+  availableSubjects=signal<Subject[]>([])
   grades= signal<Grade[]>([])
   loading = signal(false)
 
@@ -60,10 +59,8 @@ export class StudentDashboardComponent implements OnInit {
         .map(grades => grades.idSubject)
 
       console.log('materias del usuario con profesor', gradesWithProffesor)
-      this.availableSubjects= subjects.data
-        .filter(subject => !UserGrades.includes(subject.id) && gradesWithProffesor.includes(subject.id) ) 
+      this.availableSubjects.set(subjects.data.filter(subject => !UserGrades.includes(subject.id) && gradesWithProffesor.includes(subject.id)))
         console.log(this.availableSubjects)
-        this.cdr.detectChanges()
     })
   }
 
@@ -86,12 +83,12 @@ export class StudentDashboardComponent implements OnInit {
     this.gradeService
       .getGradesByUser(id)
       .subscribe({next: (response) =>{
-          this.loading.set(false)
-          console.log('Response:', response)
-          this.grades.set(response.data)
+        this.loading.set(false)
+        console.log('Response:', response)
+        this.grades.set(response.data)
       },error: (error) =>{
-          this.loading.set(false)
-          this.error_back.set(error.error.errors[0])
+        this.error_back.set(error.error.errors[0])
+        this.loading.set(false)
       }
     })
   }
