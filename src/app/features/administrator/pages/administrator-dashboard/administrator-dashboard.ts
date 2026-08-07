@@ -47,11 +47,15 @@ export class AdministratorDashboard implements OnInit {
   private platformId = inject(PLATFORM_ID);
   
   ngOnInit(): void {
-    this.adminName = this.authService.getUserName()
-    this.obtenerMaterias()
-    console.log('PLATFORM', isPlatformBrowser(this.platformId));
-    console.log('TOKEN', this.authService.getToken());
-    console.log('USERNAME', this.authService.getUserName());
+    console.log('INICIO NGONINIT');
+
+    this.adminName = this.authService.getUserName();
+
+    console.log('ADMIN NAME', this.adminName);
+
+    this.obtenerMaterias();
+
+    console.log('FIN NGONINIT');
   }
   
   crearUsuario(){
