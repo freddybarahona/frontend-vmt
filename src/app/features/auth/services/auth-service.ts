@@ -58,10 +58,7 @@ export class AuthService {
   }
 
   getToken(): string | null {
-    if(isPlatformBrowser(this.platformId)){
       return localStorage.getItem('token')
-    }
-    return null
   }
 
   getPayload(): JwtPayload | null {
