@@ -44,20 +44,10 @@ export class AdministratorDashboard implements OnInit {
   modalType: 'create' | 'delete P' | 'delete S' | null = null;
   newSubjectName: string= ''
   errors_back= signal<string[]>([])
-  private platformId = inject(PLATFORM_ID);
   
   ngOnInit(): void {
-    console.log('PLATFORM', isPlatformBrowser(this.platformId));
-    console.log('TOKEN', this.authService.getToken());
-    console.log('INICIO NGONINIT');
-
     this.adminName = this.authService.getUserName();
-
-    console.log('ADMIN NAME', this.adminName);
-
     this.obtenerMaterias();
-
-    console.log('FIN NGONINIT');
   }
   
   crearUsuario(){
