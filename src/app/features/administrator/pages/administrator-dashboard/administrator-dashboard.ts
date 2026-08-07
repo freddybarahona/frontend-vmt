@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { SubjectService } from '../../../../shared/services/subject.service';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule, DatePipe, isPlatformBrowser } from '@angular/common';
 import { ModalComponent } from '../../../../shared/components/modal/modal.component';
 import { AuthService } from '../../../auth/services/auth-service';
 import { GradeService } from '../../../../shared/services/grade.service';
@@ -44,8 +44,13 @@ export class AdministratorDashboard implements OnInit {
   modalType: 'create' | 'delete P' | 'delete S' | null = null;
   newSubjectName: string= ''
   errors_back= signal<string[]>([])
+  private platformId = inject(PLATFORM_ID);
   
   ngOnInit(): void {
+    console.log('PLATFORM', isPlatformBrowser(inject(PLATFORM_ID)));
+    console.log('TOKEN', this.authService.getToken());
+    console.log('USERNAME', this.authService.getUserName());
+
     this.adminName = this.authService.getUserName()
     this.obtenerMaterias()
   }
