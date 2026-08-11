@@ -1,17 +1,28 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { AuthService } from '../../../features/auth/services/auth-service';
 import { UserService } from '../../services/user.service';
 import { User } from '../../../user';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header-component',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './header-component.html',
   styleUrl: './header-component.css',
 })
 export class HeaderComponent implements OnInit{
   private authService = inject(AuthService)
   private userService = inject(UserService)
+
+  public isAdmin = computed(()=> this.authService.getRole() === 'ADMINISTRATOR')
+  /* 
+    signal() → almacena un valor que tú modificas.
+    computed() → calcula un valor a partir de otros signals.
+    | Situación                                                       | Usa                 |
+    | --------------------------------------------------------------- | ------------------- |
+    | El usuario hace clic en un enlace o botón para ir a otra página | `routerLink`        |
+    | Tu código decide cuándo navegar                                 | `router.navigate()` |
+  */
   public userInfo:User[]=[{
     id: this.authService.getUserId(),
     name: '',
