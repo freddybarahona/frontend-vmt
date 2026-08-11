@@ -2,20 +2,15 @@
   <div class="bg-white w-full max-w-6xl rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
     <!-- Panel Izquierdo -->
     <div class="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-16">
-
       <div class="w-full max-w-md px-10">
-
         <!-- Logo -->
         <div class="text-center mb-10">
-
           <h1 class="text-3xl lg:text-4xl font-bold text-slate-800">
             EduSystem
           </h1>
-
           <p class="text-slate-500 mt-2 text-sm lg:text-base">
             Inicia sesión para continuar
           </p>
-
         </div>
 
         <form (ngSubmit)="login()">
@@ -74,6 +69,32 @@
               </button>
             </div>
           </div>
+          @if(loading()){
+            <div class="rounded-lg border border-gray-200 bg-white">
+              <div class="flex items-center gap-3 px-4 py-3 text-gray-500">
+
+                <svg
+                  class="h-5 w-5 animate-spin"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24">
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4">
+                  </circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8z">
+                  </path>
+                </svg>
+              </div>
+            </div>
+          }
           @if (errors_back().includes('Usuario o contrasena incorrectos')) {
               <div class="justify-center">
                 <label class="block mb-2 text-red-700 text-sm font-semibold">

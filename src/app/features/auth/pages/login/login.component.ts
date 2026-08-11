@@ -16,6 +16,7 @@ export class LoginComponent {
   public email = ''
   public password = ''
   public errors_back= signal<string[]>([])
+  public loading= signal(false)
 
   constructor( private authService: AuthService, private router: Router
   ){}
@@ -27,6 +28,7 @@ export class LoginComponent {
   }
 
   login() {
+    this.loading.set(true)
     const req: LoginRequest={
       email: this.email,
       password: this.password
@@ -37,13 +39,14 @@ export class LoginComponent {
         console.log(token)
         this.authService.saveToken(token)
         const role = this.authService.getRole()
-
+        
+        this.loading.set(false)
         switch(role){
-
+          
           case 'ADMINISTRATOR':
             this.router.navigate(['/administrator'])
             break;
-
+            
           case 'PROFFESOR':
             this.router.navigate(['/proffesor'])
             this.router.navigate(['/student']) //esto es solo para pruebas
@@ -56,6 +59,7 @@ export class LoginComponent {
       },
       error: err => {
         this.errors_back.set(err.error.errors)
+        this.loading.set(false)
       }
     });
   }
