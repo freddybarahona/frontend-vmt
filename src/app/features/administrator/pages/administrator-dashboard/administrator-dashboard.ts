@@ -13,6 +13,7 @@ import { GetGradesBySubjectDTO } from '../../../../shared/interfaces/get-grades-
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HeaderComponent } from '../../../../shared/components/header-component/header-component';
+import { DashboardService } from '../../services/dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,6 +33,7 @@ export class AdministratorDashboard implements OnInit {
   private authService = inject(AuthService)
   private GradeService = inject(GradeService)
   private UserService = inject(UserService)
+  private DashboardService = inject(DashboardService)
   isModalOpen=false
   public adminName = ''
   subjectsAvailable= signal<SubjectProffesor[]>([])
@@ -50,6 +52,19 @@ export class AdministratorDashboard implements OnInit {
     this.obtenerMaterias();
   }
   
+  exportExcel(){
+    this.DashboardService.exportExcel().subscribe({next: (blob) =>{
+      const url = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+
+      link.href = url
+      link.download ='dashboard-eduSystem.xlsx'
+
+      link.click()
+      window.URL.revokeObjectURL(url)
+    }})
+  }
+
   crearUsuario(){
     this.router.navigate(['administrator/createUser'])
   }
