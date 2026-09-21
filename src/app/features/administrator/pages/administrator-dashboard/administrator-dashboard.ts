@@ -24,8 +24,7 @@ import { DashboardService } from '../../services/dashboard.service';
     FormsModule,
     HeaderComponent
   ],
-  templateUrl: './administrator-dashboard.html',
-  styleUrl: './administrator-dashboard.css',
+  templateUrl: './administrator-dashboard.html'
 })
 export class AdministratorDashboard implements OnInit {
   private router = inject(Router)
