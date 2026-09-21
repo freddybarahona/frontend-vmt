@@ -65,6 +65,10 @@ export class AdministratorDashboard implements OnInit {
     }})
   }
 
+  plantillaDecorreos(){
+    this.router.navigate(['administrator/createEmail'])
+  }
+
   crearUsuario(){
     this.router.navigate(['administrator/createUser'])
   }

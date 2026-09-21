@@ -4,6 +4,7 @@ import { VerifyCodeComponent } from "./pages/verify-code-component/verify-code-c
 import { CreateUserComponent } from "./pages/create-user-component/create-user-component";
 import { verifyCodeGuard } from "../../core/guards/verify-code-guard";
 import { DashboardBi } from "./pages/dashboard-bi/dashboard-bi";
+import { ChangeTemplateEmail } from "./pages/change.template.email/change.template.email";
 
 export default [
   {
@@ -18,6 +19,10 @@ export default [
     path: 'verifyCode',
     component: VerifyCodeComponent,
     canActivate: [verifyCodeGuard]
+  },
+  {
+    path: 'createEmail',
+    component: ChangeTemplateEmail
   },
   {
     path: 'dashboard-bi',
