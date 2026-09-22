@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../../../shared/components/header-component/header-component';
 import { EmailService } from '../../services/email.service';
@@ -14,9 +14,9 @@ export class ChangeTemplateEmail implements OnInit {
   private emailService = inject(EmailService);
   private sanitizer = inject(DomSanitizer)
   subject = '';
-  htmlContent = '';
+  htmlContent = signal('');
   dbSubject = '';
-  dbHtmlContent = '';
+  dbHtmlContent = signal('');
   loading = signal(false);
   successMessage = '';
   errors = signal<string[]>([]);
@@ -33,7 +33,7 @@ export class ChangeTemplateEmail implements OnInit {
         this.subject = this.dbSubject;
         break;
       case "htmlContent":
-        this.htmlContent = this.dbHtmlContent;
+        this.htmlContent.set(this.dbHtmlContent())
         break;
     }
   }
@@ -45,7 +45,7 @@ export class ChangeTemplateEmail implements OnInit {
 
     const payload: CreateTemplateEmailRequest = {
       subject: this.subject,
-      htmlContent: this.htmlContent,
+      htmlContent: this.htmlContent(),
     };
 
     this.emailService.updateTemplate(payload).subscribe({
@@ -68,7 +68,7 @@ export class ChangeTemplateEmail implements OnInit {
       next: (response) => {
         this.loading.set(false);
         this.dbSubject = response.data.subject;
-        this.dbHtmlContent = response.data.htmlContent;
+        this.dbHtmlContent.set(response.data.htmlContent)
       },
       error: (error) => {
         this.loading.set(false);
@@ -98,7 +98,7 @@ export class ChangeTemplateEmail implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(doc);
   }
 
-  previewHtml({ html }:{html: string}): SafeHtml {
-    return this.envolverConTailwind(html);
-  }
+  previewHtml= computed(()=> this.envolverConTailwind(this.htmlContent()))
+
+  previewDbHtml = computed(() => this.envolverConTailwind(this.dbHtmlContent()))
 }
