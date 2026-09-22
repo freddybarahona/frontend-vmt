@@ -15,7 +15,7 @@ export class ChangeTemplateEmail implements OnInit {
   htmlContent = '';
   dbSubject = '';
   dbHtmlContent = '';
-  loading = false;
+  loading = signal(false);
   successMessage = '';
   errors = signal<string[]>([]);
 
@@ -24,7 +24,7 @@ export class ChangeTemplateEmail implements OnInit {
   }
 
   guardarPlantilla(): void {
-    this.loading = true;
+    this.loading.set(true);
     this.successMessage = '';
     this.errors.set([]);
 
@@ -35,12 +35,12 @@ export class ChangeTemplateEmail implements OnInit {
 
     this.emailService.updateTemplate(payload).subscribe({
       next: (response) => {
-        this.loading = false;
+        this.loading.set(false);
         this.successMessage = response.message;
         this.obtenerPlantilla();
       },
       error: (error) => {
-        this.loading = false;
+        this.loading.set(false);
         this.errors.set(error.error?.errors ?? ['No se pudo guardar la plantilla']);
       },
     });
@@ -48,15 +48,15 @@ export class ChangeTemplateEmail implements OnInit {
 
   obtenerPlantilla(){
     this.errors.set([])
-    this.loading = true;
+    this.loading.set(true);
     this.emailService.getTemplate({ id: 1 }).subscribe({
       next: (response) => {
-        this.loading = false;
+        this.loading.set(false);
         this.dbSubject = response.data.subject;
         this.dbHtmlContent = response.data.htmlContent;
       },
       error: (error) => {
-        this.loading = false;
+        this.loading.set(false);
         this.errors.set(error.error?.errors ?? ['No se pudo obtener la plantilla']);
       },
     });
