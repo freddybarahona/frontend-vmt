@@ -74,7 +74,7 @@
 
           <iframe
             class="h-80 w-full bg-white"
-            [srcdoc]="previewHtml()"
+            [srcdoc]="previewHtml({html:htmlContent})"
             title="Vista previa del correo">
           </iframe>
           <!-- el transcriptor a html [srcdoc] -->
@@ -99,7 +99,7 @@
 
           @if (dbHtmlContent) {
             <div class="relative">
-              <iframe class="h-80 w-full cursor-pointer bg-white" [srcdoc]="previewDbHtml()" title="Copiar contenido al editor">
+              <iframe class="h-80 w-full cursor-pointer bg-white" [srcdoc]="previewHtml({html:dbHtmlContent})" title="Copiar contenido al editor">
               </iframe>
               <div class="absolute inset-0 cursor-pointer transition hover:bg-blue-500/10" (click)="cargarEnEditor('htmlContent')" title="Copiar contenido al editor">
               </div>

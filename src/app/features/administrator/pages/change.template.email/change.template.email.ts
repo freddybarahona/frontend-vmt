@@ -98,11 +98,7 @@ export class ChangeTemplateEmail implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(doc);
   }
 
-  previewHtml(): SafeHtml {
-    return this.envolverConTailwind(this.htmlContent);
-  }
-
-  previewDbHtml(): SafeHtml {
-    return this.envolverConTailwind(this.dbHtmlContent);
+  previewHtml({ html }:{html: string}): SafeHtml {
+    return this.envolverConTailwind(html);
   }
 }
