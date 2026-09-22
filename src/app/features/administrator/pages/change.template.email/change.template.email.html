@@ -96,10 +96,11 @@
           </div>
 
           @if (dbHtmlContent) {
-            <iframe class="h-80 w-full cursor-pointer bg-white" [srcdoc]="dbHtmlContent" title="Copiar contenido al editor">
-            </iframe>
-            <div class="absolute inset-0 cursor-pointer transition hover:bg-blue-500/10" (click)="cargarEnEditor('htmlContent')" title="Copiar contenido al editor">
-
+            <div class="relative">
+              <iframe class="h-80 w-full cursor-pointer bg-white" [srcdoc]="dbHtmlContent" title="Copiar contenido al editor">
+              </iframe>
+              <div class="absolute inset-0 cursor-pointer transition hover:bg-blue-500/10" (click)="cargarEnEditor('htmlContent')" title="Copiar contenido al editor">
+              </div>
             </div>
           } @else {
             <div class="p-4 text-sm text-slate-500">
