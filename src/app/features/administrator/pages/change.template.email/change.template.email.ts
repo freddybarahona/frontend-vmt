@@ -102,3 +102,5 @@ export class ChangeTemplateEmail implements OnInit {
 
   previewDbHtml = computed(() => this.envolverConTailwind(this.dbHtmlContent()))
 }
+
+/* computed es una señal derivada que se memoiza */
