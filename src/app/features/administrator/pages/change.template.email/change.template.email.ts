@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../../../shared/components/header-component/header-component';
 import { EmailService } from '../../services/email.service';
 import { CreateTemplateEmailRequest } from '../../requests/create.template.email.request';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-change-template-email',
@@ -11,6 +12,7 @@ import { CreateTemplateEmailRequest } from '../../requests/create.template.email
 })
 export class ChangeTemplateEmail implements OnInit {
   private emailService = inject(EmailService);
+  private sanitizer = inject(DomSanitizer)
   subject = '';
   htmlContent = '';
   dbSubject = '';
@@ -73,5 +75,34 @@ export class ChangeTemplateEmail implements OnInit {
         this.errors.set(error.error?.errors ?? ['No se pudo obtener la plantilla']);
       },
     });
+  }
+
+  //metodos para permitir que el previsualizador compile css y tailwind
+
+  private tailwindCdn = '<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>';
+
+  private envolverConTailwind(html: string): SafeHtml {
+    const yaIncluyeTailwind = html.includes('@tailwindcss/browser') || html.includes('tailwindcss.com');
+    const doc = yaIncluyeTailwind ? html : 
+    `<!doctype html>
+      <html lang="es">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        ${this.tailwindCdn}
+      </head>
+      <body>
+        ${html}
+      </body>
+      </html>`
+    return this.sanitizer.bypassSecurityTrustHtml(doc);
+  }
+
+  previewHtml(): SafeHtml {
+    return this.envolverConTailwind(this.htmlContent);
+  }
+
+  previewDbHtml(): SafeHtml {
+    return this.envolverConTailwind(this.dbHtmlContent);
   }
 }
