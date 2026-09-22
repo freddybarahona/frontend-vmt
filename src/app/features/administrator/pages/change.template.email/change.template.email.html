@@ -80,19 +80,35 @@
             [srcdoc]="htmlContent"
             title="Vista previa del correo">
           </iframe>
+          <!-- el transcriptor a html [srcdoc] -->
         </div>
       </section>
 
-      <!-- Plantilla vigente: solo informativa hasta que exista GET -->
+      <!-- Plantilla vigente -->
       <section class="rounded-2xl border border-slate-200 p-5">
         <h2 class="mb-5 text-lg font-semibold text-slate-800">
           Plantilla actual
         </h2>
 
-        <div class="rounded-xl bg-slate-50 p-4 text-sm text-slate-500">
-          El backend actual no tiene un endpoint GET para consultar la plantilla
-          almacenada. Este panel podrá mostrarla cuando exista
-          <code>GET /email/content</code>.
+        <div class="overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+          <div class="border-b border-slate-200 bg-white px-4 py-3">
+            <p class="text-xs text-slate-500">Asunto</p>
+            <p class="font-semibold text-slate-800">
+              {{ dbSubject || 'Aún no hay plantilla guardada' }}
+            </p>
+          </div>
+
+          @if (dbHtmlContent) {
+            <iframe
+              class="h-80 w-full bg-white"
+              [srcdoc]="dbHtmlContent"
+              title="Plantilla actual del correo">
+            </iframe>
+          } @else {
+            <div class="p-4 text-sm text-slate-500">
+              No hay contenido almacenado todavía.
+            </div>
+          }
         </div>
       </section>
 

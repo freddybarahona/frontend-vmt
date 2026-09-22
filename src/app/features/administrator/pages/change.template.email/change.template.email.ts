@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../../../shared/components/header-component/header-component';
 import { EmailService } from '../../services/email.service';
@@ -9,14 +9,19 @@ import { CreateTemplateEmailRequest } from '../../requests/create.template.email
   imports: [FormsModule, HeaderComponent],
   templateUrl: './change.template.email.html',
 })
-export class ChangeTemplateEmail {
+export class ChangeTemplateEmail implements OnInit {
   private emailService = inject(EmailService);
-
   subject = '';
   htmlContent = '';
+  dbSubject = '';
+  dbHtmlContent = '';
   loading = false;
   successMessage = '';
   errors = signal<string[]>([]);
+
+  ngOnInit(): void {
+    this.obtenerPlantilla();
+  }
 
   guardarPlantilla(): void {
     this.loading = true;
@@ -28,14 +33,31 @@ export class ChangeTemplateEmail {
       htmlContent: this.htmlContent,
     };
 
-    this.emailService.UpdateTemplate(payload).subscribe({
+    this.emailService.updateTemplate(payload).subscribe({
       next: (response) => {
         this.loading = false;
         this.successMessage = response.message;
+        this.obtenerPlantilla();
       },
       error: (error) => {
         this.loading = false;
         this.errors.set(error.error?.errors ?? ['No se pudo guardar la plantilla']);
+      },
+    });
+  }
+
+  obtenerPlantilla(){
+    this.errors.set([])
+    this.loading = true;
+    this.emailService.getTemplate({ id: 1 }).subscribe({
+      next: (response) => {
+        this.loading = false;
+        this.dbSubject = response.data.subject;
+        this.dbHtmlContent = response.data.htmlContent;
+      },
+      error: (error) => {
+        this.loading = false;
+        this.errors.set(error.error?.errors ?? ['No se pudo obtener la plantilla']);
       },
     });
   }
