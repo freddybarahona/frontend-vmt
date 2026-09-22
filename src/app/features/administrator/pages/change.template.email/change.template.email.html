@@ -55,9 +55,9 @@
 
         <button
           type="submit"
-          [disabled]="loading"
+          [disabled]="loading()"
           class="mt-5 w-full rounded-xl bg-blue-600 py-3 font-semibold text-white shadow-lg transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-400">
-          {{ loading ? 'Guardando...' : 'Guardar plantilla' }}
+          {{ loading() ? 'Guardando...' : 'Guardar plantilla' }}
         </button>
       </form>
 
