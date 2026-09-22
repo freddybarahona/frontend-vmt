@@ -23,6 +23,19 @@ export class ChangeTemplateEmail implements OnInit {
     this.obtenerPlantilla();
   }
 
+  cargarEnEditor(opcion: "subject" | "htmlContent"){
+    this.successMessage = '';
+    this.errors.set([]);
+    switch (opcion) {
+      case "subject":
+        this.subject = this.dbSubject;
+        break;
+      case "htmlContent":
+        this.htmlContent = this.dbHtmlContent;
+        break;
+    }
+  }
+
   guardarPlantilla(): void {
     this.loading.set(true);
     this.successMessage = '';
