@@ -41,6 +41,31 @@
           class="w-full resize-none rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 font-mono text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200">
         </textarea>
 
+        <button type="button"
+                (click)="usarPlantillaBase()"
+                class="mb-3 w-full rounded-xl border border-blue-200 bg-blue-50 py-2 text-sm font-semibold text-blue-700 transition hover:bg-blue-100">
+          Usar plantilla base email-safe
+        </button>
+
+        <button type="button"
+                (click)="mostrarConsejos.set(!mostrarConsejos())"
+                class="w-full rounded-xl border border-slate-200 bg-slate-50 py-2 text-sm font-semibold text-slate-600 transition hover:bg-slate-100">
+          {{ mostrarConsejos() ? 'Ocultar' : 'Ver' }} buenas prácticas de correo
+        </button>
+
+        @if (mostrarConsejos()) {
+          <ul class="mb-5 mt-3 space-y-1 rounded-xl border border-slate-200 bg-slate-50 p-4 text-xs leading-relaxed text-slate-600">
+            <li>Sin flex/grid: usa <b>tablas</b> (<code>role="presentation"</code>) de máx. <b>600px</b>.</li>
+            <li>Estilos <b>inline</b>; no dependas de <code>&lt;style&gt;</code> (Gmail/Outlook lo borran).</li>
+            <li>Colores en <b>hex</b> y tamaños en <b>px</b> (no <code>oklch</code>/<code>rem</code>/<code>calc()</code>).</li>
+            <li>Botones como <code>&lt;a&gt;</code> dentro de <code>&lt;td&gt;</code>; evita <code>&lt;button&gt;</code>.</li>
+            <li>Evita <code>hover:</code>, <code>shadow-*</code> y <code>rounded-*</code>: degradan en Outlook.</li>
+            <li>Un solo <code>&lt;h1&gt;</code>, texto de al menos <b>16px</b> y <code>alt</code> en imágenes.</li>
+            <li>Dark mode: respeta <code>color-scheme</code>; evita <code>#fff</code>/<code>#000</code> puros.</li>
+            <li>Peso total menor a <b>102 KB</b> y buen ratio texto/imagen.</li>
+          </ul>
+        }
+
         @if (errors().length > 0) {
           <p class="mt-3 text-sm font-medium text-red-600">
             {{ errors()[0] }}

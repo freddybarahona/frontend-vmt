@@ -20,6 +20,26 @@ export class ChangeTemplateEmail implements OnInit {
   loading = signal(false);
   successMessage = '';
   errors = signal<string[]>([]);
+  mostrarConsejos = signal(false);
+
+  private readonly PLANTILLA_BASE_EMAIL_SAFE = `<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" align="center" style="background-color:#ffffff;border:1px solid #e2e8f0;border-radius:16px">
+  <tr>
+    <td style="padding:32px">
+      <h1 style="font-size:24px;line-height:1.2;color:#1e293b;margin:0 0 16px">EduSystem</h1>
+      <p style="font-size:16px;line-height:1.5;color:#334155;margin:0 0 12px">Hola \${name},</p>
+      <p style="font-size:16px;line-height:1.5;color:#334155;margin:0 0 20px">Tu código de verificación es:</p>
+      <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin-top:24px;margin-bottom:24px">
+        <tr>
+          <td style="background-color:#f1f5f9;border-radius:12px;padding-top:16px;padding-right:32px;padding-bottom:16px;padding-left:32px">
+            <span style="font-size:32px;line-height:1.2;font-weight:800;letter-spacing:4px;color:#2563eb">\${code}</span>
+          </td>
+        </tr>
+      </table>
+      <p style="font-size:14px;line-height:1.5;color:#64748b;margin:24px 0 0">Si no solicitaste este código, ignora este mensaje.</p>
+    </td>
+  </tr>
+</table>
+<p style="font-size:12px;line-height:1.5;color:#94a3b8;text-align:center;margin-top:16px">Mensaje automático — EduSystem</p>`
 
   ngOnInit(): void {
     this.obtenerPlantilla();
@@ -36,6 +56,13 @@ export class ChangeTemplateEmail implements OnInit {
         this.htmlContent.set(this.dbHtmlContent())
         break;
     }
+  }
+
+  usarPlantillaBase(): void {
+    this.successMessage = '';
+    this.errors.set([]);
+    this.subject = 'Verificación de cuenta EduSystem';
+    this.htmlContent.set(this.PLANTILLA_BASE_EMAIL_SAFE);
   }
 
   guardarPlantilla(): void {
@@ -103,4 +130,4 @@ export class ChangeTemplateEmail implements OnInit {
   previewDbHtml = computed(() => this.envolverConTailwind(this.dbHtmlContent()))
 }
 
-/* computed es una señal derivada que se memoiza */
+/* computed es una señal derivada que se memoiza solo se actualiza cuando hay un cambio */
