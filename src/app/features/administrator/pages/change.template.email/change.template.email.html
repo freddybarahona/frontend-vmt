@@ -89,7 +89,7 @@
           Vista previa en tiempo real
         </h2>
 
-        <div class="overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-slate-50">
           <div class="border-b border-slate-200 bg-white px-4 py-3">
             <p class="text-xs text-slate-500">Asunto</p>
             <p class="font-semibold text-slate-800">
@@ -98,7 +98,7 @@
           </div>
 
           <iframe
-            class="h-80 w-full bg-white"
+            class="block h-[32rem] w-[600px] bg-white"
             [srcdoc]="previewHtml()"
             title="Vista previa del correo">
           </iframe>
@@ -112,7 +112,7 @@
           Plantilla actual
         </h2>
 
-        <div class="overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+        <div class="overflow-x-auto rounded-xl border border-slate-200 bg-slate-50">
           <div class="cursor-pointer border-b border-slate-200 bg-white px-4 py-3 transition hover:bg-blue-500/10"
                (click)="cargarEnEditor('subject')"
                title="Copiar asunto al editor">
@@ -123,12 +123,13 @@
           </div>
 
           @if (dbHtmlContent()) {
-            <div class="relative">
-              <iframe class="h-80 w-full cursor-pointer bg-white" [srcdoc]="previewDbHtml()" title="Copiar contenido al editor">
-              </iframe>
-              <div class="absolute inset-0 cursor-pointer transition hover:bg-blue-500/10" (click)="cargarEnEditor('htmlContent')" title="Copiar contenido al editor">
-              </div>
+            <div class="cursor-pointer border-b border-slate-200 bg-white px-4 py-3 transition hover:bg-blue-500/10"
+                 (click)="cargarEnEditor('htmlContent')"
+                 title="Copiar contenido al editor">
+              <p class="text-sm font-medium text-slate-600">Clic para copiar el contenido al editor</p>
             </div>
+            <iframe class="block h-[32rem] w-[600px] bg-white" [srcdoc]="previewDbHtml()" title="Ver la plantilla guardada">
+            </iframe>
           } @else {
             <div class="p-4 text-sm text-slate-500">
               No hay contenido almacenado todavía.
