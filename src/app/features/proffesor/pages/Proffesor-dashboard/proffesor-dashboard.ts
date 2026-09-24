@@ -17,8 +17,7 @@ import { HeaderComponent } from '../../../../shared/components/header-component/
     ModalComponent,
     HeaderComponent
   ],
-  templateUrl: './proffesor-dashboard.html',
-  styleUrl: './proffesor-dashboard.css',
+  templateUrl: './proffesor-dashboard.html'
 })
 export class ProffesorDashboard implements OnInit {
   private router = inject(Router)//es de angular/router no de express ese es para back
