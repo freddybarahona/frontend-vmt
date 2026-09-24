@@ -4,6 +4,8 @@ import { HeaderComponent } from '../../../../shared/components/header-component/
 import { EmailService } from '../../services/email.service';
 import { CreateTemplateEmailRequest } from '../../requests/create.template.email.request';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AuthService } from '../../../auth/services/auth-service';
+import { CorreoCodigoVerificacionRequest } from '../../../../shared/interfaces/correo-codigo-verificacion-request';
 
 @Component({
   selector: 'app-change-template-email',
@@ -12,6 +14,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 })
 export class ChangeTemplateEmail implements OnInit {
   private emailService = inject(EmailService);
+  private authService = inject(AuthService);
   private sanitizer = inject(DomSanitizer)
   subject = '';
   htmlContent = signal('');
@@ -21,6 +24,8 @@ export class ChangeTemplateEmail implements OnInit {
   successMessage = '';
   errors = signal<string[]>([]);
   mostrarConsejos = signal(false);
+  emailPrueba = '';
+  probando = signal(false);
 
   private readonly PLANTILLA_BASE_EMAIL_SAFE = `<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" align="center" style="background-color:#ffffff;border:1px solid #e2e8f0;border-radius:16px">
   <tr>
@@ -63,6 +68,39 @@ export class ChangeTemplateEmail implements OnInit {
     this.errors.set([]);
     this.subject = 'Verificación de cuenta EduSystem';
     this.htmlContent.set(this.PLANTILLA_BASE_EMAIL_SAFE);
+  }
+
+  probarPlantillaActual(): void {
+    this.successMessage = '';
+    this.errors.set([]);
+
+    if (this.emailPrueba.trim().length === 0) {
+      this.errors.set(['Primero escribe el correo al que enviar la prueba']);
+      return;
+    }
+
+    const payload: CorreoCodigoVerificacionRequest = {
+      email: this.emailPrueba.trim(),
+      name: 'Freddy Barahona',
+      identificacion: '1234567890',
+      password: 'Password123',
+      repeatPassword: 'Password123',
+      role: 'STUDENT',
+      subject: this.subject,
+      htmlContent: this.htmlContent(),
+    };
+
+    this.probando.set(true);
+    this.authService.correoCodigoVerificacion(payload).subscribe({
+      next: (response) => {
+        this.probando.set(false);
+        this.successMessage = response.message;
+      },
+      error: (error) => {
+        this.probando.set(false);
+        this.errors.set(error.error?.errors ?? ['No se pudo enviar el correo de prueba']);
+      },
+    });
   }
 
   guardarPlantilla(): void {
