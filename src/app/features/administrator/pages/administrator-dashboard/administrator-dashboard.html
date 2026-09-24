@@ -87,15 +87,19 @@
             @if(subjectsAvailable().length> 0){
               @for(subject of subjectsAvailable(); track subject.id){
                 <tr (click)="toggleSubject(subject.id)" class="hover:bg-blue-50 transition-colors cursor-pointer">
+
                   <td class="px-6 py-4 text-gray-700">
                     {{subject.id}}
                   </td>
+
                   <td class="px-6 py-4 font-medium text-gray-800">
                     {{subject.subjectName}}
                   </td>
+
                   <td class="px-6 py-4 text-gray-700">
                     {{subject.proffesorName}}
                   </td>
+
                   <td class="flex justify-center px-6 py-4">
                     <!-- botones de accion para filas -->
                     <div class="flex justify-center gap-3">
@@ -110,14 +114,14 @@
                         <!-- el eventPropagation ayuda a evitar errores con otras acciones que se activan en este caso en la misma fila como el get studentsBySubject -->
                       </div>
                   </td>
+
                 </tr>
                 <!-- EXPANDIBLE ESTUDIANTES -->
                 @if(expandedSubjectId == subject.id){
                   <tr class="bg-gray-50">
+
                     <td colspan="4" class="px-6 py-4">
-  
                       <div class="rounded-2xl border border-slate-200 bg-slate-50 overflow-hidden">
-  
                         <div class="px-4 py-3 border-b border-slate-200 bg-white">
                           <h3 class="font-semibold text-slate-700">
                             Estudiantes registrados
