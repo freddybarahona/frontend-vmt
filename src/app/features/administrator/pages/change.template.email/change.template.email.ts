@@ -79,6 +79,8 @@ export class ChangeTemplateEmail implements OnInit {
       return;
     }
 
+    const htmlPrueba = this.htmlContent().trim();
+
     const payload: CorreoCodigoVerificacionRequest = {
       email: this.emailPrueba.trim(),
       name: 'Freddy Barahona',
@@ -86,8 +88,8 @@ export class ChangeTemplateEmail implements OnInit {
       password: 'Password123',
       repeatPassword: 'Password123',
       role: 'STUDENT',
-      subject: this.subject,
-      htmlContent: this.htmlContent(),
+      subject: this.subject.trim() || null,
+      htmlContent: htmlPrueba || null
     };
 
     this.probando.set(true);

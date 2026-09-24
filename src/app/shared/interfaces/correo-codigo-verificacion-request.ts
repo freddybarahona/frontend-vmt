@@ -5,6 +5,6 @@ export interface CorreoCodigoVerificacionRequest {
   password: string
   repeatPassword: string
   role: string
-  subject?: string
-  htmlContent?: string
+  subject?: string | null
+  htmlContent?: string | null
 }
