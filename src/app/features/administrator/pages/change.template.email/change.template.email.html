@@ -94,6 +94,9 @@
             <li>Un solo <code>&lt;h1&gt;</code>, texto de al menos <b>16px</b> y <code>alt</code> en imágenes.</li>
             <li>Dark mode: respeta <code>color-scheme</code>; evita <code>#fff</code>/<code>#000</code> puros.</li>
             <li>Peso total menor a <b>102 KB</b> y buen ratio texto/imagen.</li>
+            <li>Imágenes SVG: pégalos como <b>data URI</b> (<code>data:image/svg+xml,...</code>) o <code>&lt;svg&gt;</code> inline; el backend los convierte a PNG al enviar.</li>
+            <li>Nunca uses <code>&lt;img src="...svg"&gt;</code> ni escribas rutas <code>/images/...</code> a mano: Gmail/Outlook no muestran SVG.</li>
+            <li>En los SVG, <code>currentColor</code> se pinta <code>#2563eb</code>; fija <code>width</code>/<code>height</code> para controlar el tamaño final.</li>
           </ul>
         }
 
