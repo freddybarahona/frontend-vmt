@@ -4,7 +4,6 @@ import { HeaderComponent } from '../../../../shared/components/header-component/
 @Component({
   selector: 'app-dashboard-bi',
   imports: [HeaderComponent],
-  templateUrl: './dashboard-bi.html',
-  styleUrl: './dashboard-bi.css',
+  templateUrl: './dashboard-bi.html'
 })
 export class DashboardBi {}

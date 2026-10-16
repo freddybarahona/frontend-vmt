@@ -13,8 +13,7 @@ import { HeaderComponent } from '../../../../shared/components/header-component/
     FormsModule,
     HeaderComponent
   ],
-  templateUrl: './create-user-component.html',
-  styleUrl: './create-user-component.css',
+  templateUrl: './create-user-component.html'
 })
 export class CreateUserComponent{
 

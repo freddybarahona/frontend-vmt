@@ -16,7 +16,22 @@ export const authGuard: CanActivateFn = (route, state) => { //o no va ni routeni
   if (!token) { 
     return router.createUrlTree(['/auth/login']); //si no hay token a login devuelta
   }
-  const payload = jwtDecode<JwtPayload>(token)
+
+  let payload: JwtPayload
+  try {
+    payload = jwtDecode<JwtPayload>(token)
+  } catch {
+    //token corrupto -> fuera de sesion
+    localStorage.removeItem('token')
+    return router.createUrlTree(['/auth/login'])
+  }
+
+  //si el token ya expiro -> fuera de sesion (aunque no haya peticiones al backend)
+  const expirado = payload.exp * 1000 <= Date.now()
+  if (expirado) {
+    localStorage.removeItem('token')
+    return router.createUrlTree(['/auth/login'])
+  }
   /* ojo este JwtPayload es la interfaz que hice yo con mis propiedades de backend
   porque el JwtPayload de JwtDecode no to tiene las propiedades personalizadas
   sino las propiedades fijas de Jwt me refiero al tiempo de creacion y al tiempo

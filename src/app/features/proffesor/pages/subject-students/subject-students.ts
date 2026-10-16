@@ -18,8 +18,7 @@ import { HeaderComponent } from '../../../../shared/components/header-component/
     FormsModule,
     HeaderComponent
   ],
-  templateUrl: './subject-students.html',
-  styleUrl: './subject-students.css',
+  templateUrl: './subject-students.html'
 })
 export class SubjectStudents implements OnInit {
   private route = inject(ActivatedRoute)

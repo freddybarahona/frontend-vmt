@@ -4,8 +4,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   selector: 'app-modal',//este es el nombre de la carpeta
   imports: [],
   standalone: true,
-  templateUrl: './modal.component.html',
-  styleUrl: './modal.component.css',
+  templateUrl: './modal.component.html'
 })
 export class ModalComponent {
   @Input() isOpen = false //un componente padre le envie datos a este componente hijo
