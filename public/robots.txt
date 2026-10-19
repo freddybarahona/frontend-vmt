@@ -1,0 +1,5 @@
+User-agents: *
+Allow: /
+Disallow: /auth/
+
+Sitemap: https://frontend-vmt.onrender.com/sitemap.xml
